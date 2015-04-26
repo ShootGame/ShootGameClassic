@@ -1,0 +1,30 @@
+name: ShootGame
+version: '${project.version}'
+author: TheMolkaPL
+website: http://www.shootgame.net
+description: 'API oraz inne podstawowe oprogramowanie ShootGame Network'
+prefix: 'ShootGame'
+load: STARTUP
+loadbefore: [Permissions, WorldEdit]
+main: pl.shg.shootgame.plugin.ShootPlugin
+commands:
+  server:
+    description: 'Przejdz na dany serwer lub pokaz informacje o obecnym'
+    aliases: [serwer]
+    usage: '/server [target]'
+  servers:
+    description: 'Pokaz liste dostepnych serwerów'
+    aliases: [serwery]
+    usage: '/servers'
+  shg:
+    description: 'Informacje oraz statystyki serwera'
+    usage: '/shg'
+  staff:
+    description: 'Pokaz administracje online'
+    usage: '/staff'
+  stats:
+    description: 'Pokaz swoje statystyki, albo innego gracza'
+    usage: '/usage [player]'
+  xp:
+    description: 'Pokaz ilosc Twojego XP lub innego gracza'
+    usage: '/xp [player]'
