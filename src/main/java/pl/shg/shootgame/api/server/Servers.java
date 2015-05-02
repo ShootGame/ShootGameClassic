@@ -20,6 +20,7 @@ public class Servers {
     private static FileConfiguration configuration;
     private static OnlineServer online;
     private static long pingInterval;
+    private static IProxiedServer proxy;
     private static final List<TargetServer> servers = new ArrayList<>();
     
     public static void addServer(TargetServer server) {
@@ -45,6 +46,10 @@ public class Servers {
     
     public static long getPingInterval() {
         return pingInterval;
+    }
+    
+    public static IProxiedServer getProxy() {
+        return proxy;
     }
     
     public static TargetServer getServer(String id) {
@@ -79,5 +84,9 @@ public class Servers {
     
     public static void setPingInterval(long interval) {
         Servers.pingInterval = interval;
+    }
+    
+    public static void setProxy(IProxiedServer proxy) {
+        Servers.proxy = proxy;
     }
 }

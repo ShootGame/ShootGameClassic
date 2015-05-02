@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.shg.shootgame.api.command.Command;
 import pl.shg.shootgame.api.server.Servers;
+import pl.shg.shootgame.api.server.TargetServer;
 
 /**
  *
@@ -33,7 +34,17 @@ public class ServerCommand extends Command {
                     Servers.getOnline().getName() + ChatColor.YELLOW + ".");
             sender.sendMessage(ChatColor.YELLOW + "Aby przejsc na inny serwer uzyj /serwer <nazwa>");
         } else {
+            String server = args[0].toLowerCase();
+            TargetServer target = Servers.getServer(server);
+            if (target == null) {
+                target = Servers.findServer(server);
+            }
             
+            if (target != null) {
+                Servers.getProxy().connect((Player) sender, target);
+            } else {
+                sender.sendMessage(ChatColor.RED + "Serwer zawierajacy \"" + args[0] + "\" nie zostal odnaleziony.");
+            }
         }
     }
     

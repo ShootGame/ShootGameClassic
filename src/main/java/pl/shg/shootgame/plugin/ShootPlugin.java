@@ -13,9 +13,11 @@ import java.util.logging.Logger;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.shg.shootgame.api.command.BukkitCommandExecutor;
 import pl.shg.shootgame.api.command.CommandManager;
+import pl.shg.shootgame.api.server.BungeeCordProxy;
 import pl.shg.shootgame.api.server.Servers;
 import pl.shg.shootgame.listeners.PlayerListeners;
 
@@ -25,11 +27,15 @@ import pl.shg.shootgame.listeners.PlayerListeners;
  */
 public class ShootPlugin extends JavaPlugin {
     private static FileConfiguration configuration;
+    private static Plugin instance;
     
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
         configuration = this.getConfig();
+        instance = this;
+        Servers.setProxy(new BungeeCordProxy());
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         
         CommandManager.registerDefaults();
         this.registerBukkitCommands();
@@ -68,5 +74,9 @@ public class ShootPlugin extends JavaPlugin {
     
     public static FileConfiguration getConfiguration() {
         return configuration;
+    }
+    
+    public static Plugin getPlugin() {
+        return instance;
     }
 }

@@ -9,7 +9,6 @@ package pl.shg.shootgame.api.command.def;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.shg.shootgame.api.Color;
 import pl.shg.shootgame.api.command.Command;
 import pl.shg.shootgame.api.server.ArcadeTarget;
 import pl.shg.shootgame.api.server.LobbyTarget;
@@ -30,11 +29,11 @@ public class ServersCommand extends Command {
     public void execute(CommandSender sender, String[] args) {
         sender.sendMessage(Command.getTitle("Lista serwerów ShootGame", null));
         if (sender instanceof Player) {
-            sender.sendMessage(ChatColor.GOLD + "- " + Color.GREEN + Color.BOLD + Servers.getOnline().getName());
+            sender.sendMessage(ChatColor.GOLD + "Znajdujesz sie na " + ChatColor.GREEN + ChatColor.BOLD + Servers.getOnline().getName());
         }
         
         for (TargetServer target : Servers.getServers()) {
-            if (target.isPublic() || sender.hasPermission("shootgame.servers-bypass")) {
+            if (target.isOnline() && (target.isPublic() || sender.hasPermission("shootgame.servers-bypass"))) {
                 if (target instanceof ArcadeTarget) {
                     sender.sendMessage(this.printArcade((ArcadeTarget) target));
                 } else if (target instanceof LobbyTarget) {
@@ -44,6 +43,7 @@ public class ServersCommand extends Command {
                 }
             }
         }
+        sender.sendMessage(ChatColor.YELLOW + "Aby przejsc na inny serwer uzyj /serwer <nazwa>");
     }
     
     @Override
@@ -52,15 +52,23 @@ public class ServersCommand extends Command {
     }
     
     private String printArcade(ArcadeTarget target) {
-        return ChatColor.GRAY + "- " + Color.DARK_AQUA + Color.BOLD + target.getName() +
-                Color.RESET + " " + Color.DARK_PURPLE + target.getArcadePlayers() +
-                Color.GRAY + "/" + target.getArcadeSlots() + " - " + Color.DARK_AQUA +
-                Color.ITALIC + target.getMap();
+        String prefix = "";
+        if (!target.isPublic()) {
+            prefix = ChatColor.GOLD + ChatColor.ITALIC.toString() + "[Ukryty] " + ChatColor.RESET;
+        }
+        return ChatColor.GRAY + "- " + prefix + ChatColor.DARK_AQUA + ChatColor.BOLD + target.getName() +
+                ChatColor.RESET + " " + ChatColor.DARK_PURPLE + target.getArcadePlayers() +
+                ChatColor.GRAY + "/" + target.getArcadeSlots() + " - " + ChatColor.DARK_AQUA +
+                ChatColor.ITALIC + target.getMap();
     }
     
     private String printMinecraft(MinecraftTarget target) {
-        return ChatColor.GRAY + "- " + Color.DARK_AQUA + Color.BOLD + target.getName() +
-                Color.RESET + " " + Color.DARK_PURPLE + target.getPlayers()+
-                Color.GRAY + "/" + target.getSlots();
+        String prefix = "";
+        if (!target.isPublic()) {
+            prefix = ChatColor.GOLD + ChatColor.ITALIC.toString() + "[Ukryty] " + ChatColor.RESET;
+        }
+        return ChatColor.GRAY + "- " + prefix + ChatColor.DARK_AQUA + ChatColor.BOLD + target.getName() +
+                ChatColor.RESET + " " + ChatColor.DARK_PURPLE + target.getPlayers()+
+                ChatColor.GRAY + "/" + target.getSlots();
     }
 }

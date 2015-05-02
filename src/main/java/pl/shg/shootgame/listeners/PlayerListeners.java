@@ -10,7 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import pl.shg.shootgame.api.Color;
 import pl.shg.shootgame.api.Log;
@@ -29,14 +28,14 @@ public class PlayerListeners implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         e.setJoinMessage(null);
         
-        Log.admins(e.getPlayer().getName() + " dolaczyl na serwer");
+        Log.admins(e.getPlayer().getName() + " dolaczyl/a na serwer");
     }
     
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
         e.setQuitMessage(null);
         
-        Log.admins(e.getPlayer().getName() + " wyszedl z serwera (wyjscie)");
+        Log.admins(e.getPlayer().getName() + " wysza/edl z serwera (wyjscie)");
     }
     
     private String translateDeathMessage(String message, String player, String killer) {

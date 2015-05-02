@@ -72,7 +72,7 @@ public abstract class TargetServer extends Server implements ITarget {
     }
     
     public boolean isOnline() {
-        return this.players == 0 && this.slots == 0;
+        return !(this.players == 0 && this.slots == 0);
     }
     
     public boolean isPublic() {
