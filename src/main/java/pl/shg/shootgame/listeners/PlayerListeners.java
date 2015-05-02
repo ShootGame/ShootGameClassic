@@ -33,17 +33,6 @@ public class PlayerListeners implements Listener {
     }
     
     @EventHandler
-    public void onPlayerKick(PlayerKickEvent e) {
-        String reason = e.getLeaveMessage();
-        if (reason == null) {
-            reason = "wyrzucenie";
-        }
-        e.setLeaveMessage(null);
-        
-        Log.admins(e.getPlayer().getName() + " wyszedl z serwera (" + reason + ")");
-    }
-    
-    @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
         e.setQuitMessage(null);
         

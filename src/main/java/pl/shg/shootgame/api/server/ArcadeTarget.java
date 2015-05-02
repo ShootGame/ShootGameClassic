@@ -28,10 +28,12 @@ public class ArcadeTarget extends TargetServer {
         this.setSlots(response.getPlayers().getMax());
         
         Object[] result = ArcadeData.fromData(response.getDescription());
-        this.map = (String) result[0];
-        this.status = (Integer) result[1];
-        this.arcadePlayers = (Integer) result[2];
-        this.arcadeSlots = (Integer) result[3];
+        try {
+            this.map = (String) result[0];
+            this.status = (Integer) result[1];
+            this.arcadePlayers = (Integer) result[2];
+            this.arcadeSlots = (Integer) result[3];
+        } catch (NullPointerException ex) {}
     }
     
     public int getArcadePlayers() {

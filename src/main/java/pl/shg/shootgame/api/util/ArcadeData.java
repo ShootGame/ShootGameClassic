@@ -17,7 +17,7 @@ public class ArcadeData {
         String[] values = data.split(String.valueOf(SEPARATOR));
         Object[] objects = new Object[4];
         
-        for (int i = 0; i < values.length; i++) {
+        for (byte i = 0; i < values.length; i++) {
             try {
                 objects[i] = readData(i, data);
             } catch (NumberFormatException ex) {
@@ -36,12 +36,17 @@ public class ArcadeData {
         return result.substring(0, result.length() - 1);
     }
     
-    private static Object readData(int i, String value) throws NumberFormatException {
+    private static Object readData(byte i, String value) throws NumberFormatException {
         switch (i) {
-            case 0: return value; // map name
-            case 1: return Integer.parseInt(value); // match status
-            case 2: return Integer.parseInt(value); // players in match
-            case 3: return Integer.parseInt(value); // slots in match
+            // current maps display name
+            case 0: return value;
+            // match status: 0 - restarting, 1 - starting, 2 - running, 3 - cycling
+            case 1: return Integer.parseInt(value);
+            // amount of players in current teams
+            case 2: return Integer.parseInt(value);
+            // totals slots in the teams
+            case 3: return Integer.parseInt(value);
+            // return if null
             default: return null;
         }
     }
