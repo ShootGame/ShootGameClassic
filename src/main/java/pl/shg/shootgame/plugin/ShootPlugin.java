@@ -7,7 +7,6 @@
 package pl.shg.shootgame.plugin;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,7 +58,8 @@ public class ShootPlugin extends JavaPlugin {
             
             new ServersLoader(this.getConfig().getString("server", "Development"), target).initialize();
             Servers.setPingInterval(target.getLong("ping-interval", 5 * 20L));
-            this.getServer().getScheduler().runTaskTimerAsynchronously(this, new ServerPingTask(), 0L, Servers.getPingInterval());
+            long interval = Servers.getPingInterval();
+            this.getServer().getScheduler().runTaskTimerAsynchronously(this, new ServerPingTask(), interval, interval);
         } catch (IOException ex) {
             Logger.getLogger(ShootPlugin.class.getName()).log(Level.SEVERE, null, ex);
         }
