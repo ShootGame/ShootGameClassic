@@ -10,19 +10,8 @@ package pl.shg.shootgame.api.server;
  *
  * @author Aleksander
  */
-public class Server {
-    private final String id, name;
-    
-    public Server(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-    
-    public String getID() {
-        return this.id;
-    }
-    
-    public String getName() {
-        return this.name;
+public class OnlineServer extends Server {
+    public OnlineServer(String id, String name) {
+        super(id, name);
     }
 }

@@ -1,0 +1,2 @@
+server: Development
+server-list: 'http://git.voxelland.pl/shootgame/servers/raw/master/servers.yml'

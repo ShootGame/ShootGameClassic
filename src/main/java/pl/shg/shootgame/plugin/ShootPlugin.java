@@ -6,10 +6,18 @@
  */
 package pl.shg.shootgame.plugin;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.shg.shootgame.api.command.BukkitCommandExecutor;
 import pl.shg.shootgame.api.command.CommandManager;
+import pl.shg.shootgame.api.server.Servers;
 import pl.shg.shootgame.listeners.PlayerListeners;
 
 /**
@@ -17,11 +25,17 @@ import pl.shg.shootgame.listeners.PlayerListeners;
  * @author Aleksander
  */
 public class ShootPlugin extends JavaPlugin {
+    private static FileConfiguration configuration;
+    
     @Override
     public void onEnable() {
+        this.saveDefaultConfig();
+        configuration = this.getConfig();
+        
         CommandManager.registerDefaults();
         this.registerBukkitCommands();
         this.registerListeners();
+        this.registerServers();
     }
     
     private void registerBukkitCommands() {
@@ -36,5 +50,22 @@ public class ShootPlugin extends JavaPlugin {
     
     private void registerListeners() {
         this.getServer().getPluginManager().registerEvents(new PlayerListeners(), this);
+    }
+    
+    private void registerServers() {
+        try {
+            String url = this.getConfig().getString("server-list");
+            FileConfiguration target = YamlConfiguration.loadConfiguration(new URL(url).openStream());
+            
+            new ServersLoader(this.getConfig().getString("server", "Development"), target).initialize();
+            Servers.setPingInterval(target.getLong("ping-interval", 5 * 20L));
+            this.getServer().getScheduler().runTaskTimerAsynchronously(this, new ServerPingTask(), 0L, Servers.getPingInterval());
+        } catch (IOException ex) {
+            Logger.getLogger(ShootPlugin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static FileConfiguration getConfiguration() {
+        return configuration;
     }
 }
