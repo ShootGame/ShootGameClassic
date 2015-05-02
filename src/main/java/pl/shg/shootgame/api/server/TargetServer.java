@@ -55,6 +55,21 @@ public abstract class TargetServer extends Server implements ITarget {
         return this.port;
     }
     
+    public String getSetting(String setting) {
+        return this.getSetting(setting, null);
+    }
+    
+    public String getSetting(String setting, String def) {
+        String type = "minecraft";
+        if (this instanceof ArcadeTarget) {
+            type = "arcade";
+        } else if (this instanceof LobbyTarget) {
+            type = "lobby";
+        }
+        
+        return Servers.getConfiguration().getString(type + "." + this.getID() + "." + setting, def);
+    }
+    
     public int getSlots() {
         return this.slots;
     }

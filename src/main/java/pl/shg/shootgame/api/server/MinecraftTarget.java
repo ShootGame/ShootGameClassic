@@ -6,6 +6,7 @@
  */
 package pl.shg.shootgame.api.server;
 
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.libs.com.google.gson.Gson;
 
 /**
@@ -13,6 +14,8 @@ import org.bukkit.craftbukkit.libs.com.google.gson.Gson;
  * @author Aleksander
  */
 public class MinecraftTarget extends TargetServer {
+    private Material icon;
+    
     public MinecraftTarget(String address, String id, String name, boolean publicy) throws NumberFormatException {
         super(address, id, name, publicy);
     }
@@ -22,5 +25,13 @@ public class MinecraftTarget extends TargetServer {
         PingResponse response = new Gson().fromJson(data, PingResponse.class);
         this.setPlayers(response.getPlayers().getOnline());
         this.setSlots(response.getPlayers().getMax());
+    }
+    
+    public Material getIcon() {
+        return this.icon;
+    }
+    
+    public void setIcon(Material icon) {
+        this.icon = icon;
     }
 }

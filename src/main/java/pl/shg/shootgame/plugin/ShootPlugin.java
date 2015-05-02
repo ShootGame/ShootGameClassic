@@ -55,8 +55,9 @@ public class ShootPlugin extends JavaPlugin {
         try {
             String url = this.getConfig().getString("server-list");
             FileConfiguration target = YamlConfiguration.loadConfiguration(new URL(url).openStream());
+            Servers.setConfiguration(target);
             
-            new ServersLoader(this.getConfig().getString("server", "Development"), target).initialize();
+            new ServersLoader(this.getConfig().getString("server", "Development").toLowerCase(), target).initialize();
             Servers.setPingInterval(target.getLong("ping-interval", 5 * 20L));
             long interval = Servers.getPingInterval();
             this.getServer().getScheduler().runTaskTimerAsynchronously(this, new ServerPingTask(), interval, interval);
