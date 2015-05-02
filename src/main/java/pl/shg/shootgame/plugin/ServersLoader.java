@@ -7,6 +7,7 @@
 package pl.shg.shootgame.plugin;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import pl.shg.shootgame.api.server.ArcadeTarget;
 import pl.shg.shootgame.api.server.LobbyTarget;
@@ -86,6 +87,7 @@ public class ServersLoader {
         for (String id : this.getFile().getConfigurationSection("minecraft").getKeys(false)) {
             this.addServer(new MinecraftTarget(
                     this.getFile().getString("minecraft." + id + ".address", "localhost:" + TargetServer.PORT),
+                    Material.getMaterial(this.getFile().getInt("minecraft." + id + ".icon", 2)),
                     id,
                     this.getFile().getString("minecraft." + id + ".name", "Serwer Minecraft"),
                     this.getFile().getBoolean("minecraft." + id + ".public", false)

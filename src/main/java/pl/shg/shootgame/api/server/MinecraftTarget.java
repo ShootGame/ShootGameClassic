@@ -14,10 +14,11 @@ import org.bukkit.craftbukkit.libs.com.google.gson.Gson;
  * @author Aleksander
  */
 public class MinecraftTarget extends TargetServer {
-    private Material icon;
+    private final Material icon;
     
-    public MinecraftTarget(String address, String id, String name, boolean publicy) throws NumberFormatException {
+    public MinecraftTarget(String address, Material icon, String id, String name, boolean publicy) throws NumberFormatException {
         super(address, id, name, publicy);
+        this.icon = icon;
     }
     
     @Override
@@ -29,9 +30,5 @@ public class MinecraftTarget extends TargetServer {
     
     public Material getIcon() {
         return this.icon;
-    }
-    
-    public void setIcon(Material icon) {
-        this.icon = icon;
     }
 }

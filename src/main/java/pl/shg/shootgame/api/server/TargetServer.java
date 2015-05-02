@@ -148,7 +148,12 @@ public abstract class TargetServer extends Server implements ITarget {
                 if (input != null) input.close();
                 if (socket != null) socket.close();
             } catch (IOException ex) {
-                Logger.getLogger(TargetServer.class.getName()).log(Level.SEVERE, null, ex);
+                if (ex.getMessage().equals("Connection refused")) {
+                    this.setPlayers(0);
+                    this.setSlots(0);
+                } else {
+                    Logger.getLogger(TargetServer.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
