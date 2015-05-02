@@ -7,6 +7,7 @@
 package pl.shg.shootgame.api.server;
 
 import org.bukkit.craftbukkit.libs.com.google.gson.Gson;
+import pl.shg.shootgame.api.util.ArcadeData;
 
 /**
  *
@@ -26,14 +27,11 @@ public class ArcadeTarget extends TargetServer {
         this.setPlayers(response.getPlayers().getOnline());
         this.setSlots(response.getPlayers().getMax());
         
-        String[] values = response.getDescription().split("$");
-        for (int i = 0; i < values.length; i++) {
-            try {
-                this.setData(i, data);
-            } catch (NumberFormatException ex) {
-                
-            }
-        }
+        Object[] result = ArcadeData.fromData(response.getDescription());
+        this.map = (String) result[0];
+        this.status = (Integer) result[1];
+        this.arcadePlayers = (Integer) result[2];
+        this.arcadeSlots = (Integer) result[3];
     }
     
     public int getArcadePlayers() {
@@ -50,14 +48,5 @@ public class ArcadeTarget extends TargetServer {
     
     public int getStatus() {
         return this.status;
-    }
-    
-    private void setData(int i, String value) throws NumberFormatException {
-        switch (i) {
-            case 0: this.map = value; break;
-            case 1: this.status = Integer.parseInt(value); break;
-            case 2: this.arcadePlayers = Integer.parseInt(value); break;
-            case 3: this.arcadeSlots = Integer.parseInt(value); break;
-        }
     }
 }
