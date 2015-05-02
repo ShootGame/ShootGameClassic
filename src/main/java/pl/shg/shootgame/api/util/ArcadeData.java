@@ -11,7 +11,7 @@ package pl.shg.shootgame.api.util;
  * @author Aleksander
  */
 public class ArcadeData {
-    public static final char SEPARATOR = '\u0024'; // dollar sign
+    public static final char SEPARATOR = '\u0040'; // at sign
     
     public static Object[] fromData(String data) {
         String[] values = data.split(String.valueOf(SEPARATOR));

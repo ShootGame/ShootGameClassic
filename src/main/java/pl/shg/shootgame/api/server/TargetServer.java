@@ -13,9 +13,6 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.Charset;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.bukkit.Bukkit;
 
 /**
  *
@@ -139,7 +136,6 @@ public abstract class TargetServer extends Server implements ITarget {
             input.close();
             socket.close();
         } catch (IOException ex) {
-            Bukkit.getLogger().log(Level.INFO, "Pingowanie {0} nieudane ({1}).", new Object[] {this.getID(), ex.getMessage()});
         } finally {
             try {
                 if (data != null) data.close();
@@ -148,12 +144,8 @@ public abstract class TargetServer extends Server implements ITarget {
                 if (input != null) input.close();
                 if (socket != null) socket.close();
             } catch (IOException ex) {
-                if (ex.getMessage().equals("Connection refused")) {
-                    this.setPlayers(0);
-                    this.setSlots(0);
-                } else {
-                    Logger.getLogger(TargetServer.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                this.setPlayers(0);
+                this.setSlots(0);
             }
         }
     }
