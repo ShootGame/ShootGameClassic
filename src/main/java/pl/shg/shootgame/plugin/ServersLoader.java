@@ -70,9 +70,9 @@ public class ServersLoader {
         
         for (String id : this.getFile().getConfigurationSection("lobby").getKeys(false)) {
             this.addServer(new LobbyTarget(
-                    this.getFile().getString("arcade." + id + ".address", "localhost:" + TargetServer.PORT),
+                    this.getFile().getString("lobby." + id + ".address", "localhost:" + TargetServer.PORT),
                     id,
-                    this.getFile().getString("arcade." + id + ".name", "Serwer Lobby")
+                    this.getFile().getString("lobby." + id + ".name", "Serwer Lobby")
             ));
         }
     }
@@ -85,10 +85,10 @@ public class ServersLoader {
         
         for (String id : this.getFile().getConfigurationSection("minecraft").getKeys(false)) {
             this.addServer(new MinecraftTarget(
-                    this.getFile().getString("arcade." + id + ".address", "localhost:" + TargetServer.PORT),
+                    this.getFile().getString("minecraft." + id + ".address", "localhost:" + TargetServer.PORT),
                     id,
-                    this.getFile().getString("arcade." + id + ".name", "Serwer Minecraft"),
-                    this.getFile().getBoolean("arcade." + id + ".public", false)
+                    this.getFile().getString("minecraft." + id + ".name", "Serwer Minecraft"),
+                    this.getFile().getBoolean("minecraft." + id + ".public", false)
             ));
         }
     }
