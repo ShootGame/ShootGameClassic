@@ -35,7 +35,7 @@ public class PlayerListeners implements Listener {
     public void onPlayerQuit(PlayerQuitEvent e) {
         e.setQuitMessage(null);
         
-        Log.admins(e.getPlayer().getName() + " wysza/edl z serwera (wyjscie)");
+        Log.admins(e.getPlayer().getName() + " opuscil/a serwer");
     }
     
     private String translateDeathMessage(String message, String player, String killer) {
