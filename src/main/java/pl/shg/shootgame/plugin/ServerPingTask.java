@@ -6,7 +6,9 @@
  */
 package pl.shg.shootgame.plugin;
 
+import org.bukkit.Bukkit;
 import pl.shg.shootgame.api.server.Servers;
+import pl.shg.shootgame.api.server.ServersPingedEvent;
 import pl.shg.shootgame.api.server.TargetServer;
 
 /**
@@ -19,5 +21,6 @@ public class ServerPingTask implements Runnable {
         for (TargetServer server : Servers.getServers()) {
             server.ping();
         }
+        Bukkit.getPluginManager().callEvent(new ServersPingedEvent());
     }
 }
