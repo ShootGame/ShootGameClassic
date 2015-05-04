@@ -9,13 +9,7 @@ package pl.shg.shootgame.api.util;
 import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.minecraft.server.v1_8_R1.ChatSerializer;
-import net.minecraft.server.v1_8_R1.EnumTitleAction;
-import net.minecraft.server.v1_8_R1.IChatBaseComponent;
-import net.minecraft.server.v1_8_R1.Packet;
-import net.minecraft.server.v1_8_R1.PacketPlayOutChat;
-import net.minecraft.server.v1_8_R1.PacketPlayOutPlayerListHeaderFooter;
-import net.minecraft.server.v1_8_R1.PacketPlayOutTitle;
+import net.minecraft.server.v1_8_R1.*;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R1.util.CraftChatMessage;
 import org.bukkit.entity.Player;
@@ -25,28 +19,53 @@ import org.bukkit.entity.Player;
  * @author Aleksander
  */
 public class NMSHacks {
-    public static void sendActionMessage(Player player, String message) {
-        sendPacket(player, new PacketPlayOutChat(toJSONText(message), (byte) 2)); // action bar
-                
+    private final Player player;
+    
+    public NMSHacks(Player player) {
+        this.player = player;
     }
     
-    public static void sendChatMessage(Player player, String message) {
-        sendChatPacket(player, message, (byte) 0); // classic hidable message
+    public Player getPlayer() {
+        return this.player;
     }
     
-    public static void sendMessage(Player player, String message) {
-        sendChatPacket(player, message, (byte) 1); // fake command message
+    public void sendActionMessage(String message) {
+        sendPacket(this.getPlayer(), new PacketPlayOutChat(toJSONText(message), (byte) 2)); // action bar     
     }
     
-    public static void sendSubtitle(Player player, String subtitle) {
-        sendPacket(player, new PacketPlayOutTitle(EnumTitleAction.SUBTITLE, toJSONText(subtitle)));
+    public void sendChatMessage(String message) {
+        this.sendChatPacket(message, (byte) 0); // classic hidable message
     }
     
-    public static void sendTitle(Player player, String title) {
-        sendPacket(player, new PacketPlayOutTitle(EnumTitleAction.TITLE, toJSONText(title)));
+    public void sendMessage(String message) {
+        this.sendChatPacket(message, (byte) 1); // fake command message
     }
     
-    public static void setTabList(Player player, String header, String footer) {
+    public void sendSubtitle(String subtitle) {
+        this.sendSubtitle(subtitle, 3 * 20);
+    }
+    
+    public void sendSubtitle(String subtitle, int stay) {
+        this.sendSubtitle(subtitle, 10, stay, 10);
+    }
+    
+    public void sendSubtitle(String subtitle, int in, int stay, int out) {
+        sendPacket(this.getPlayer(), new PacketPlayOutTitle(EnumTitleAction.SUBTITLE, toJSONText(subtitle), in, stay, out));
+    }
+    
+    public void sendTitle(String title) {
+        this.sendTitle(title, 3 * 20);
+    }
+    
+    public void sendTitle(String title, int stay) {
+        this.sendTitle(title, 10, stay, 10);
+    }
+    
+    public void sendTitle(String title, int in, int stay, int out) {
+        sendPacket(this.getPlayer(), new PacketPlayOutTitle(EnumTitleAction.TITLE, toJSONText(title), in, stay, out));
+    }
+    
+    public void setTabList(String header, String footer) {
         PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter(toJSONText(header));
         try {
             Field field = packet.getClass().getDeclaredField("b");
@@ -55,13 +74,13 @@ public class NMSHacks {
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
             Logger.getLogger(NMSHacks.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            sendPacket(player, packet);
+            sendPacket(this.getPlayer(), packet);
         }
     }
     
-    public static synchronized void sendChatPacket(Player player, String message, byte type) {
+    public synchronized void sendChatPacket(String message, byte type) {
         for (IChatBaseComponent component : CraftChatMessage.fromString(message)) {
-            sendPacket(player, new PacketPlayOutChat(component, type));
+            sendPacket(this.getPlayer(), new PacketPlayOutChat(component, type));
         }
     }
     
@@ -72,5 +91,9 @@ public class NMSHacks {
     public static IChatBaseComponent toJSONText(String message) {
         IChatBaseComponent component = ChatSerializer.a("{\"text\": \"" + message + "\"}");
         return CraftChatMessage.fixComponent(component);
+    }
+    
+    public static NMSHacks of(Player player) {
+        return new NMSHacks(player);
     }
 }
