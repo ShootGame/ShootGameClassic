@@ -14,17 +14,17 @@ import org.bukkit.entity.Player;
  *
  * @author Aleksander
  */
-public class Title {
+public class Titles {
     public static final int IN = 5;
     public static final int STAY = 60;
     public static final int OUT = 10;
     
     public static void send(Player player, String title, String subtitle) {
-        send(player, title, subtitle, Title.STAY);
+        send(player, title, subtitle, Titles.STAY);
     }
     
     public static void send(Player player, String title, String subtitle, int stay) {
-        send(player, title, subtitle, Title.IN, stay, Title.OUT);
+        send(player, title, subtitle, Titles.IN, stay, Titles.OUT);
     }
     
     public static void send(Player player, String title, String subtitle, int in, int stay, int out) {

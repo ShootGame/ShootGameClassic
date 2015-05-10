@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
  *
  * @author Aleksander
  */
-public class Tablist {
+public class Tablists {
     public static void sendHeaderFooter(Player player, String header, String footer) {
         PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter(NMSHacks.toJSONText(header));
         try {
