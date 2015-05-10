@@ -15,7 +15,10 @@ import pl.shg.commons.command.CommandBase;
  */
 public class ShgCommand extends CommandBase {
     public ShgCommand() {
-        super("shg");
+        this.setAliases("shg", "shootgame");
+        this.setDescription("Informacje oraz statystyki serwera");
+        this.setPermission("shootgame.command.manage");
+        this.setUsage("-h - for help");
     }
     
     @Override

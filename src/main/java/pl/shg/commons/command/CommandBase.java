@@ -6,12 +6,23 @@
  */
 package pl.shg.commons.command;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
+import org.bukkit.help.GenericCommandHelpTopic;
+import org.bukkit.help.HelpTopic;
+import org.bukkit.help.HelpTopicComparator;
+import org.bukkit.help.IndexHelpTopic;
+import org.bukkit.plugin.Plugin;
 import pl.shg.shootgame.command.ServerCommand;
 import pl.shg.shootgame.command.ServersCommand;
 import pl.shg.shootgame.command.ShgCommand;
@@ -24,26 +35,15 @@ import pl.shg.shootgame.command.XpCommand;
  * @author Aleksander
  */
 public abstract class CommandBase {
-    private static  final List<CommandBase> commands = new ArrayList<>();
+    private static final List<CommandBase> commands = new ArrayList<>();
+    private static final Executor executor = new Executor();
     
-    private final String description;
+    private String[] aliases;
+    private String description, permission, usage;
     private char[] flags;
-    private String name;
-    private String usage;
     
     public enum CommandMessage {
         NO_PERMISSION, PLAYER_NEEDED, NUMBER_NEEDED, CONSOLE_NEEDED;
-    }
-    
-    public CommandBase(String name) {
-        PluginCommand command = Bukkit.getPluginCommand(name.toLowerCase());
-        if (command != null) {
-            this.description = command.getDescription();
-            this.name = command.getName();
-            this.usage = command.getUsage();
-        } else {
-            throw new NullPointerException("Command " + name + " doesnt exists in the Bukkit API");
-        }
     }
     
     public boolean canNot(CommandSender sender, String permission) {
@@ -56,6 +56,10 @@ public abstract class CommandBase {
     }
     
     public abstract void execute(CommandSender sender, String[] args);
+    
+    public String[] getAliases() {
+        return this.aliases;
+    }
     
     public String getDescription() {
         return this.description;
@@ -93,7 +97,11 @@ public abstract class CommandBase {
     }
     
     public String getName() {
-        return this.name;
+        return this.getAliases()[0];
+    }
+    
+    public String getPermission() {
+        return this.permission;
     }
     
     public String getStringFromArgs(int index, String[] args) {
@@ -146,15 +154,27 @@ public abstract class CommandBase {
         }
     }
     
+    public void setAliases(String... aliases) {
+        this.aliases = aliases;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
     public void setFlags(char[] flags) {
         this.flags = flags;
     }
     
-    public final void setUsage(String usage) {
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
+    
+    public void setUsage(String usage) {
         if (usage == null) {
             usage = "/" + this.getName();
         }
-        this.usage = usage;
+        this.usage = "/" + this.getName() + " " + usage;
     }
     
     public void throwMessage(CommandSender sender, CommandMessage message) {
@@ -193,16 +213,56 @@ public abstract class CommandBase {
         return label + " " + ChatColor.DARK_AQUA + title + ChatColor.RESET + " " + info + label;
     }
     
-    public static void register(CommandBase command) {
+    public static void register(Plugin plugin, CommandBase command) {
         commands.add(command);
+        registerBukkit(plugin, command);
     }
     
-    public static void registerDefaults() {
-        register(new ServerCommand());
-        register(new ServersCommand());
-        register(new ShgCommand());
-        register(new StaffCommand());
-        register(new StatsCommand());
-        register(new XpCommand());
+    public static void registerDefaults(Plugin plugin) {
+        register(plugin, new ServerCommand());
+        register(plugin, new ServersCommand());
+        register(plugin, new ShgCommand());
+        register(plugin, new StaffCommand());
+        register(plugin, new StatsCommand());
+        register(plugin, new XpCommand());
+    }
+    
+    private static void registerBukkit(Plugin plugin, CommandBase command) {
+        Command bukkitCommand = new CommandPerformer(executor, command.getName());
+        bukkitCommand.setAliases(null);
+        bukkitCommand.setDescription(command.getDescription());
+        bukkitCommand.setLabel(command.getName());
+        bukkitCommand.setUsage(command.getUsage());
+        
+        try {
+            Field field = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+            if (field != null) {
+                field.setAccessible(true);
+                CommandMap map = (CommandMap) field.get(Bukkit.getServer());
+                map.register(command.getName(), plugin.getName().toLowerCase(), bukkitCommand);
+            }
+        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+            Logger.getLogger(CommandBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void registerHelpTopic(Plugin plugin) {
+        Set<HelpTopic> help = new TreeSet<>(HelpTopicComparator.helpTopicComparatorInstance());
+        for (CommandBase command : CommandBase.getCommands()) {
+            org.bukkit.command.Command bCommand = Bukkit.getCommandMap().getCommand(command.getName());
+            if (bCommand != null) {
+                help.add(new GenericCommandHelpTopic(bCommand));
+            }
+        }
+        
+        IndexHelpTopic index = new IndexHelpTopic(
+                plugin.getName(),
+                "Wszystkie komendy pluginu " + plugin.getName(),
+                null,
+                help,
+                "Ponizej znajduja sie wszystkie komendy " + plugin.getName() + ":"
+        );
+        
+        Bukkit.getHelpMap().addTopic(index);
     }
 }

@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
  *
  * @author Aleksander
  */
+@Deprecated
 public class Log {
     public static void admins(String message) {
         for (Player player : Bukkit.getOnlinePlayers()) {

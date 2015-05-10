@@ -18,7 +18,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import pl.shg.commons.command.CommandBase;
 import pl.shg.commons.server.BungeeCordProxy;
 import pl.shg.commons.server.Servers;
-import pl.shg.shootgame.api.command.BukkitCommandExecutor;
 import pl.shg.shootgame.listeners.PlayerListeners;
 
 /**
@@ -37,20 +36,14 @@ public class ShootPlugin extends JavaPlugin {
         Servers.setProxy(new BungeeCordProxy());
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         
-        CommandBase.registerDefaults();
         this.registerBukkitCommands();
         this.registerListeners();
         this.registerServers();
     }
     
     private void registerBukkitCommands() {
-        CommandExecutor executor = new BukkitCommandExecutor();
-        this.getCommand("server").setExecutor(executor);
-        this.getCommand("servers").setExecutor(executor);
-        this.getCommand("shg").setExecutor(executor);
-        this.getCommand("staff").setExecutor(executor);
-        this.getCommand("stats").setExecutor(executor);
-        this.getCommand("xp").setExecutor(executor);
+        CommandBase.registerDefaults(this);
+        CommandBase.registerHelpTopic(this);
     }
     
     private void registerListeners() {

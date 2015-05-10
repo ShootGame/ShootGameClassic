@@ -15,7 +15,10 @@ import pl.shg.commons.command.CommandBase;
  */
 public class StatsCommand extends CommandBase {
     public StatsCommand() {
-        super("stats");
+        this.setAliases("stats");
+        this.setDescription("Pokaz swoje statystyki, lub innego gracza");
+        this.setPermission("shootgame.command.stats");
+        this.setUsage("[player]");
     }
     
     @Override

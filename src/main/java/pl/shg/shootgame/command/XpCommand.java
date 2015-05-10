@@ -15,7 +15,10 @@ import pl.shg.commons.command.CommandBase;
  */
 public class XpCommand extends CommandBase {
     public XpCommand() {
-        super("xp");
+        this.setAliases("xp", "pkt");
+        this.setDescription("Pokaz ilosc Twojego XP lub innego gracza");
+        this.setPermission("shootgame.command.xp");
+        this.setUsage("[player]");
     }
 
     @Override

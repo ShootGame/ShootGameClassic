@@ -15,7 +15,9 @@ import pl.shg.commons.command.CommandBase;
  */
 public class StaffCommand extends CommandBase {
     public StaffCommand() {
-        super("staff");
+        this.setAliases("staff", "admini");
+        this.setDescription("Pokaz administracje online");
+        this.setPermission("shootgame.command.staff");
     }
     
     @Override

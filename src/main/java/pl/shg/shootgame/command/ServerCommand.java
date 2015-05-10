@@ -19,7 +19,10 @@ import pl.shg.commons.server.TargetServer;
  */
 public class ServerCommand extends CommandBase {
     public ServerCommand() {
-        super("server");
+        this.setAliases("server", "serwer");
+        this.setDescription("Przejdz na dany serwer lub pokaz informacje o obecnym");
+        this.setPermission("shootgame.command.server");
+        this.setUsage("[target]");
     }
     
     @Override
