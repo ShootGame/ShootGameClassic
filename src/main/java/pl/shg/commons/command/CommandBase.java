@@ -8,6 +8,7 @@ package pl.shg.commons.command;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -41,6 +42,7 @@ public abstract class CommandBase {
     private String[] aliases;
     private String description, permission, usage;
     private char[] flags;
+    private Plugin owner;
     
     public enum CommandMessage {
         NO_PERMISSION, PLAYER_NEEDED, NUMBER_NEEDED, CONSOLE_NEEDED;
@@ -100,6 +102,10 @@ public abstract class CommandBase {
         return this.getAliases()[0];
     }
     
+    public Plugin getOwner() {
+        return this.owner;
+    }
+    
     public String getPermission() {
         return this.permission;
     }
@@ -120,7 +126,10 @@ public abstract class CommandBase {
     }
     
     public String getUsage() {
-        return this.usage;
+        if (this.usage != null) {
+            return this.usage;
+        }
+        return "/" + this.getName();
     }
     
     public boolean hasFlag(String[] args, char flag) {
@@ -130,6 +139,10 @@ public abstract class CommandBase {
             }
         }
         return false;
+    }
+    
+    public boolean hasPermission() {
+        return this.permission != null;
     }
     
     public boolean isFlag(String arg) {
@@ -190,6 +203,10 @@ public abstract class CommandBase {
         }
     }
     
+    private void setOwner(Plugin owner) {
+        this.owner = owner;
+    }
+    
     public static CommandBase getCommand(String command) {
         for (CommandBase cmd : commands) {
             if (cmd.getName().toLowerCase().equals(command.toLowerCase())) {
@@ -214,6 +231,7 @@ public abstract class CommandBase {
     }
     
     public static void register(Plugin plugin, CommandBase command) {
+        command.setOwner(plugin);
         commands.add(command);
         registerBukkit(plugin, command);
     }
@@ -229,9 +247,12 @@ public abstract class CommandBase {
     
     private static void registerBukkit(Plugin plugin, CommandBase command) {
         Command bukkitCommand = new CommandPerformer(executor, command.getName());
-        bukkitCommand.setAliases(null);
+        bukkitCommand.setAliases(Arrays.asList(command.getAliases()));
         bukkitCommand.setDescription(command.getDescription());
         bukkitCommand.setLabel(command.getName());
+        if (command.hasPermission()) {
+            bukkitCommand.setPermission(command.getPermission());
+        }
         bukkitCommand.setUsage(command.getUsage());
         
         try {
@@ -249,9 +270,13 @@ public abstract class CommandBase {
     public static void registerHelpTopic(Plugin plugin) {
         Set<HelpTopic> help = new TreeSet<>(HelpTopicComparator.helpTopicComparatorInstance());
         for (CommandBase command : CommandBase.getCommands()) {
-            org.bukkit.command.Command bCommand = Bukkit.getCommandMap().getCommand(command.getName());
-            if (bCommand != null) {
-                help.add(new GenericCommandHelpTopic(bCommand));
+            if (!command.getOwner().equals(plugin)) {
+                continue;
+            }
+            
+            Command bukkit = Bukkit.getCommandMap().getCommand(command.getName());
+            if (bukkit != null) {
+                help.add(new GenericCommandHelpTopic(bukkit));
             }
         }
         
