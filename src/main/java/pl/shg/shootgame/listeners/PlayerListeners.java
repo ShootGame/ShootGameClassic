@@ -6,12 +6,12 @@
  */
 package pl.shg.shootgame.listeners;
 
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import pl.shg.shootgame.api.Color;
 import pl.shg.shootgame.api.Log;
 
 /**
@@ -40,31 +40,31 @@ public class PlayerListeners implements Listener {
     
     private String translateDeathMessage(String message, String player, String killer) {
         if (message.contains("fell out"))
-            message = player + Color.GRAY + " wypadl ze swiata";
+            message = player + ChatColor.GRAY + " wypadl ze swiata";
         else if (message.contains("hit the ground") || message.contains("fell from a high place"))
-            message = player + Color.GRAY + " spadl z wysokosci";
+            message = player + ChatColor.GRAY + " spadl z wysokosci";
         else if (message.contains("drowned"))
-            message = player + Color.GRAY + " utopil sie";
+            message = player + ChatColor.GRAY + " utopil sie";
         else if (message.contains("swim in lava"))
-            message = player + Color.GRAY + " spalil sie w lawie";
+            message = player + ChatColor.GRAY + " spalil sie w lawie";
         else if (message.contains("struck by lightning"))
-            message = player + Color.GRAY + " zabil piorun";
+            message = player + ChatColor.GRAY + " zabil piorun";
         else if (message.contains("blew up") || message.contains("blown up"))
-            message = player + Color.GRAY + " wybuchl";
+            message = player + ChatColor.GRAY + " wybuchl";
         else if (message.contains("went up in flames") || message.contains("burned to death"))
-            message = player + Color.GRAY + " spalil sie";
+            message = player + ChatColor.GRAY + " spalil sie";
         else if (message.contains("pricked to death") || message.contains("walked into a cactus"))
-            message = player + Color.GRAY + " wskoczyl na kaktus";
+            message = player + ChatColor.GRAY + " wskoczyl na kaktus";
         else if (message.contains("starved"))
-            message = player + Color.GRAY + " zmarl z glodu";
+            message = player + ChatColor.GRAY + " zmarl z glodu";
         else if (message.contains("was slain by magic"))
-            message = player + Color.GRAY + " zmarl magia";
+            message = player + ChatColor.GRAY + " zmarl magia";
         else if (message.contains("slain"))
-            message = player + Color.GRAY + " zostal zabity";
+            message = player + ChatColor.GRAY + " zostal zabity";
         else if (message.contains("shot"))
-            message = player + Color.GRAY + " zostal zastrzelony";
+            message = player + ChatColor.GRAY + " zostal zastrzelony";
         else if (message.contains("died"))
-            message = player + Color.GRAY + " zmarl";
+            message = player + ChatColor.GRAY + " zmarl";
         
         if(killer != null)
             message = message + " przez " + killer;

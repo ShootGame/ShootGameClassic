@@ -9,12 +9,12 @@ package pl.shg.shootgame.plugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
-import pl.shg.shootgame.api.server.ArcadeTarget;
-import pl.shg.shootgame.api.server.LobbyTarget;
-import pl.shg.shootgame.api.server.MinecraftTarget;
-import pl.shg.shootgame.api.server.OnlineServer;
-import pl.shg.shootgame.api.server.Servers;
-import pl.shg.shootgame.api.server.TargetServer;
+import pl.shg.commons.server.ArcadeTarget;
+import pl.shg.commons.server.LobbyTarget;
+import pl.shg.commons.server.MinecraftTarget;
+import pl.shg.commons.server.OnlineServer;
+import pl.shg.commons.server.Servers;
+import pl.shg.commons.server.TargetServer;
 
 /**
  *

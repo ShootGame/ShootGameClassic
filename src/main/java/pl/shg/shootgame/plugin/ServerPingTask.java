@@ -7,9 +7,9 @@
 package pl.shg.shootgame.plugin;
 
 import org.bukkit.Bukkit;
-import pl.shg.shootgame.api.server.Servers;
-import pl.shg.shootgame.api.server.ServersPingedEvent;
-import pl.shg.shootgame.api.server.TargetServer;
+import pl.shg.commons.server.Servers;
+import pl.shg.commons.server.ServersPingedEvent;
+import pl.shg.commons.server.TargetServer;
 
 /**
  *

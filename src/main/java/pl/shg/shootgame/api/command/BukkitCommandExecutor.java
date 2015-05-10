@@ -6,9 +6,10 @@
  */
 package pl.shg.shootgame.api.command;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import pl.shg.shootgame.api.Color;
+import pl.shg.commons.command.CommandBase;
 import pl.shg.shootgame.api.Log;
 
 /**
@@ -18,10 +19,10 @@ import pl.shg.shootgame.api.Log;
 public class BukkitCommandExecutor implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
-        Command cmd = CommandManager.getCommand(command.getName());
+        CommandBase cmd = CommandBase.getCommand(command.getName());
         if (cmd != null) {
             if (args.length < cmd.minArguments()) {
-                sender.sendMessage(Color.RED + cmd.getUsage());
+                sender.sendMessage(ChatColor.RED + cmd.getUsage());
             } else {
                 cmd.execute(sender, args);
             }

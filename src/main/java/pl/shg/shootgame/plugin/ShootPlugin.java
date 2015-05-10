@@ -15,10 +15,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.shg.commons.command.CommandBase;
+import pl.shg.commons.server.BungeeCordProxy;
+import pl.shg.commons.server.Servers;
 import pl.shg.shootgame.api.command.BukkitCommandExecutor;
-import pl.shg.shootgame.api.command.CommandManager;
-import pl.shg.shootgame.api.server.BungeeCordProxy;
-import pl.shg.shootgame.api.server.Servers;
 import pl.shg.shootgame.listeners.PlayerListeners;
 
 /**
@@ -37,7 +37,7 @@ public class ShootPlugin extends JavaPlugin {
         Servers.setProxy(new BungeeCordProxy());
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         
-        CommandManager.registerDefaults();
+        CommandBase.registerDefaults();
         this.registerBukkitCommands();
         this.registerListeners();
         this.registerServers();

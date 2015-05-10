@@ -4,7 +4,7 @@
  * Proprietary and confidential
  * Written by Aleksander Jagiełło <themolkapl@gmail.com>, 2014
  */
-package pl.shg.shootgame.api.server;
+package pl.shg.commons.server;
 
 import java.util.List;
 import org.bukkit.event.Event;
