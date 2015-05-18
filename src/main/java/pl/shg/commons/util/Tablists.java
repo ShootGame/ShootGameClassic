@@ -6,6 +6,8 @@
  */
 package pl.shg.commons.util;
 
+import com.mojang.authlib.GameProfile;
+import java.util.UUID;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R1.ChatSerializer;
@@ -32,10 +34,6 @@ public class Tablists {
             new TextComponent(footer)
         };
         NMSHacks.sendPacket(player, packet);
-        
-        /*for (int y = 0; y < 75; y++) { // 80 cells
-            sendCells(player, new TabCell(0, 0, "cos", new GameProfile(UUID.randomUUID(), "cos"), 1000));
-        }*/
     }
     
     public static void sendCells(Player player, TabCell... cells) {
@@ -49,6 +47,15 @@ public class Tablists {
             cell.setUpdateWaiting(false);
             packet.b.add(new PlayerInfoData(packet, cell.getProfile(), cell.getPing(),
                     EnumGamemode.NOT_SET, ChatSerializer.a(cell.getName())));
+        }
+        NMSHacks.sendPacket(player, packet);
+    }
+    
+    public static void sendClearCells(Player player) {
+        PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo();
+        for (int i = 0; i < 79; i++) { // 80 cells
+            packet.b.add(new PlayerInfoData(packet, new GameProfile(UUID.randomUUID(), ""),
+                    Tablists.PING, EnumGamemode.NOT_SET, ChatSerializer.a("")));
         }
         NMSHacks.sendPacket(player, packet);
     }
