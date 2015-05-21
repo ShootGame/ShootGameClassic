@@ -7,7 +7,6 @@
 
 package pl.shg.commons.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import net.minecraft.server.v1_8_R1.PacketPlayOutScoreboardTeam;
@@ -46,7 +45,7 @@ public class Tags {
             team.setSuffix(suffix);
         }
         PacketPlayOutScoreboardTeam packet = new PacketPlayOutScoreboardTeam(team, 0);
-        packet.g = Arrays.asList(player.getName());
+        packet.g = Arrays.asList(player.getName()); // add specifited players to the team
         for (Object players : showPlayers) {
             NMSHacks.sendPacket((Player) players, packet);
         }
