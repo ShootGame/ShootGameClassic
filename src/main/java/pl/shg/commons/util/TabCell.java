@@ -7,48 +7,59 @@
 package pl.shg.commons.util;
 
 import com.mojang.authlib.GameProfile;
+import java.util.ArrayList;
+import org.bukkit.entity.Player;
 
 /**
  *
  * @author Aleksander
  */
 public class TabCell extends Cell {
-    private String name;
+    private static final ArrayList<TabCell> list = new ArrayList<>();
+    private String name; // nazwa komorki (niewidzialna, bo sa same kolory)
     private final GameProfile profile;
     private final int ping;
     private boolean update;
+    private String displayName; // prefix (i suffix) czyli to co widac na tabie :>
+    private final Player player;
     
-    public TabCell(int column, int line, String name, GameProfile profile) {
-        super(column, line);
+    public TabCell(int index, String name, GameProfile profile, Player player) {
+        super(index);
         this.name = name;
         this.profile = profile;
         this.ping = Tablists.PING;
         this.update = true;
+        this.player = player;
     }
     
-    public TabCell(int column, int line, String name, GameProfile profile, int ping) {
-        super(column, line);
+    public TabCell(int index, String name, GameProfile profile, int ping, Player player) {
+        super(index);
         this.name = name;
         this.profile = profile;
         this.ping = ping;
         this.update = true;
+        this.player = player;
     }
     
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof TabCell) {
-            return ((TabCell) obj).getColumn() == this.getColumn()
-                    && ((TabCell) obj).getLine() == this.getLine();
-        }
-        return false;
+    public TabCell(int index, String name, GameProfile profile, int ping, String displayName, Player player) {
+        super(index);
+        this.name = name;
+        this.profile = profile;
+        this.ping = ping;
+        this.update = true;
+        this.player = player;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
     
-    public int getColumn() {
-        return this.getX();
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
     
-    public int getLine() {
-        return this.getY();
+    public String getDisplayName() {
+        return this.displayName;
     }
     
     public String getName() {
@@ -73,5 +84,26 @@ public class TabCell extends Cell {
     
     public void setUpdateWaiting(boolean update) {
         this.update = update;
+    }
+    
+    public static ArrayList<TabCell> getCells() {
+        return list;
+    }
+    
+    public static TabCell get(String name) {
+        for (TabCell cell : list) {
+            if (cell.getName().equals(name)) {
+                return cell;
+            }
+        }
+        return null;
+    }
+    
+    public static void add(TabCell cell) {
+        list.add(cell);
+    }
+    
+    public static void remove(TabCell cell) {
+        cell.remove(cell);
     }
 }

@@ -11,18 +11,13 @@ package pl.shg.commons.util;
  * @author Aleksander
  */
 public class Cell {
-    private final int x, y;
+    private final int index;
     
-    public Cell(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Cell(int index) {
+        this.index = index;
     }
     
-    public int getX() {
-        return this.x;
-    }
-    
-    public int getY() {
-        return this.y;
+    public int getIndex() {
+        return this.index;
     }
 }

@@ -7,6 +7,7 @@
 package pl.shg.commons.util;
 
 import com.mojang.authlib.GameProfile;
+import java.util.Arrays;
 import java.util.UUID;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -23,7 +24,8 @@ import org.bukkit.entity.Player;
  * @author Aleksander
  */
 public class Tablists {
-    public static final int PING = 1000;
+    public static final int PING = 1100;
+    // zostawiam to w pizduu i robie swoje api
     
     public static void sendHeaderFooter(Player player, String header, String footer) {
         PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
@@ -36,27 +38,52 @@ public class Tablists {
         NMSHacks.sendPacket(player, packet);
     }
     
-    public static void sendCells(Player player, TabCell... cells) {
+    /*public static void sendCells(Player player) {
         PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo();
         packet.a = EnumPlayerInfoAction.ADD_PLAYER;
-        for (TabCell cell : cells) {
+        for (TabCell cell : TabCell.getCells()) {
             if (!cell.isUpdateWaiting()) {
                 continue;
             }
             
             cell.setUpdateWaiting(false);
-            packet.b.add(new PlayerInfoData(packet, cell.getProfile(), cell.getPing(),
-                    EnumGamemode.NOT_SET, ChatSerializer.a(cell.getName())));
+            String prefix = "";
+            String suffix = "";
+            if (cell.getDisplayName().length() > 15) { // max 16 znakow w prefixie i suffixie
+                prefix = cell.getDisplayName().substring(0, 16);
+                suffix = cell.getDisplayName().substring(16);
+            } else {
+                prefix = cell.getDisplayName();
+            }
+        }
+        NMSHacks.sendPacket(player, packet);
+    }*/
+    
+    public static void sendClearCells(Player player) { // najpierw to wysyla sie
+        PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo();
+        for (int i = 0; i < 79; i++) { // 80 cells
+            String name = Colors.random(7);
+            System.out.println(name);
+            PlayerInfoData info = new PlayerInfoData(packet, new GameProfile(UUID.randomUUID(), ""),
+                    Tablists.PING, EnumGamemode.NOT_SET, ChatSerializer.a(name));
+            packet.b.add(info);
+            TabCell.add(new TabCell(i, name, info.a(), player));
         }
         NMSHacks.sendPacket(player, packet);
     }
     
-    public static void sendClearCells(Player player) {
-        PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo();
-        for (int i = 0; i < 79; i++) { // 80 cells
-            packet.b.add(new PlayerInfoData(packet, new GameProfile(UUID.randomUUID(), ""),
-                    Tablists.PING, EnumGamemode.NOT_SET, ChatSerializer.a("")));
+    public static void setName(int i, String name) {
+        TabCell cell = TabCell.getCells().get(0);
+        cell.setDisplayName(name);
+        updateCell(cell);
+    }
+    
+    public static void updateCell(TabCell cell) {
+        if (cell.getDisplayName().length() > 16) { // max 16 znakow w prefixie i suffixie
+            Tags.setPrefix(cell.getName(), Arrays.asList(cell.getPlayer()), cell.getDisplayName().substring(0, 16));
+            Tags.setSuffix(cell.getName(), Arrays.asList(cell.getPlayer()), cell.getDisplayName().substring(16));
+        } else {
+            Tags.setPrefix(cell.getName(), Arrays.asList(cell.getPlayer()), cell.getDisplayName());
         }
-        NMSHacks.sendPacket(player, packet);
     }
 }

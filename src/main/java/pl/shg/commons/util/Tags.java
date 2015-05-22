@@ -6,7 +6,6 @@
  */
 package pl.shg.commons.util;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,37 +23,24 @@ import org.bukkit.entity.Player;
 public class Tags {
     private static final Map<String, ScoreboardTeam> tags = new HashMap<>();
     
-    public static void register(Player player) {
-        ScoreboardTeam team = new ScoreboardTeam(new Scoreboard(), player.getName());
-        PacketPlayOutScoreboardTeam packet = new PacketPlayOutScoreboardTeam(team, 0);
-        packet.g = Arrays.asList(player.getName()); // add specifited players to the team
-        tags.put(player.getName(), team);
-        NMSHacks.sendPacket(player, packet);
-    }
-    
-    public static void unregister(Player player) {
-        tags.remove(player.getName());
-    }
-    
-    public static void setPrefix(Player player, Collection<? extends Player> showPlayers, String prefix) {
+    public static void setPrefix(String player, Collection<? extends Player> showPlayers, String prefix) {
         set(player, showPlayers, prefix, null);
     }
     
-    public static void setPrefix(Player player, String prefix) {
+    public static void setPrefix(String player, String prefix) {
         set(player, Bukkit.getOnlinePlayers(), prefix, null);
     }
     
-    public static void setSuffix(Player player, Collection<? extends Player> showPlayers, String suffix) {
+    public static void setSuffix(String player, Collection<? extends Player> showPlayers, String suffix) {
         set(player, showPlayers, null, suffix);
     }
     
-    public static void setSuffix(Player player, String suffix) {
+    public static void setSuffix(String player, String suffix) {
         set(player, Bukkit.getOnlinePlayers(), null, suffix);
     }
      
-    public static void set(Player player, Collection<? extends Player> showPlayers, String prefix, String suffix) {
-        ScoreboardTeam team = tags.get(player.getName());
-        Validate.notNull(team, "Team can not be null");
+    public static void set(String player, Collection<? extends Player> showPlayers, String prefix, String suffix) {
+        ScoreboardTeam team = new ScoreboardTeam(new Scoreboard(), player);
         
         if (prefix != null) {
             team.setPrefix(prefix);
@@ -62,11 +48,11 @@ public class Tags {
         if (suffix != null) {
             team.setSuffix(suffix);
         }
-        
+        PacketPlayOutScoreboardTeam packet1 = new PacketPlayOutScoreboardTeam(team, 0);
         PacketPlayOutScoreboardTeam packet = new PacketPlayOutScoreboardTeam(team, 2);
         for (Player players : showPlayers) {
+            NMSHacks.sendPacket(players, packet1);
             NMSHacks.sendPacket(players, packet);
         }
-        NMSHacks.sendPacket(player, packet);
     }
 }
