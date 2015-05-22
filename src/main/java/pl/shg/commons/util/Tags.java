@@ -6,6 +6,7 @@
  */
 package pl.shg.commons.util;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +22,18 @@ import org.bukkit.entity.Player;
  * @author Filip
  */
 public class Tags {
-    private static final Map<String, ScoreboardTeam> tags = new HashMap<>();
+    //private static final Map<String, ScoreboardTeam> tags = new HashMap<>();
+    
+    /*public static void register(String player) {
+        ScoreboardTeam team = new ScoreboardTeam(new Scoreboard(), player);
+        PacketPlayOutScoreboardTeam packet = new PacketPlayOutScoreboardTeam(team, 0);
+        packet.g = Arrays.asList(player); // add specifited players to the team
+        tags.put(player, team);
+    }
+    
+    public static void unregister(String player) {
+        tags.remove(player);
+    }*/
     
     public static void setPrefix(String player, Collection<? extends Player> showPlayers, String prefix) {
         set(player, showPlayers, prefix, null);
@@ -41,6 +53,7 @@ public class Tags {
      
     public static void set(String player, Collection<? extends Player> showPlayers, String prefix, String suffix) {
         ScoreboardTeam team = new ScoreboardTeam(new Scoreboard(), player);
+        Validate.notNull(team, "Team can not be null");
         
         if (prefix != null) {
             team.setPrefix(prefix);
@@ -49,7 +62,9 @@ public class Tags {
             team.setSuffix(suffix);
         }
         PacketPlayOutScoreboardTeam packet1 = new PacketPlayOutScoreboardTeam(team, 0);
+        packet1.g = Arrays.asList(player);
         PacketPlayOutScoreboardTeam packet = new PacketPlayOutScoreboardTeam(team, 2);
+        packet.g = Arrays.asList(player);
         for (Player players : showPlayers) {
             NMSHacks.sendPacket(players, packet1);
             NMSHacks.sendPacket(players, packet);
