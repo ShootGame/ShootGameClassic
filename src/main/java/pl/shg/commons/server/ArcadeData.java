@@ -11,10 +11,10 @@ package pl.shg.commons.server;
  * @author Aleksander
  */
 public class ArcadeData {
-    public static final char SEPARATOR = '\u0040'; // at sign
+    public static final char SEPARATOR = '\u0040'; // @
     
     public static Object[] fromData(String data) {
-        String[] values = data.split(String.valueOf(SEPARATOR));
+        String[] values = data.split("\\" + String.valueOf(SEPARATOR));
         Object[] objects = new Object[4];
         
         for (byte i = 0; i < values.length; i++) {
