@@ -4,22 +4,25 @@
  * Proprietary and confidential
  * Written by Aleksander Jagiełło <themolkapl@gmail.com>, 2014
  */
-package pl.shg.commons.documents;
+package pl.shg.commons.users;
 
 import pl.shg.commons.database.Connection;
+import pl.shg.commons.documents.Document;
+import pl.shg.commons.documents.DocumentInfo;
+import pl.shg.commons.settings.SettingDocument;
 
 /**
- * XP's management
+ * Notifications on the website or game's side management
  * @author Aleksander
  */
 @DocumentInfo(
-        name = "xp",
+        name = "notification",
         strong = false,
         connection = Connection.USERS,
-        documents = {NotificationDocument.class, UserDocument.class}
+        documents = {SettingDocument.class, UserDocument.class}
 )
-public class XPDocument extends Document {
-    public XPDocument() {
+public class NotificationDocument extends Document {
+    public NotificationDocument() {
         super();
     }
 }

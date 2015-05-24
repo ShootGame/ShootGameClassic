@@ -8,6 +8,9 @@ package pl.shg.commons.documents;
 
 import pl.shg.commons.database.Connection;
 import pl.shg.commons.friends.FriendDocument;
+import pl.shg.commons.users.NotificationDocument;
+import pl.shg.commons.users.RankDocument;
+import pl.shg.commons.users.UserDocument;
 
 /**
  * Ignored players list management

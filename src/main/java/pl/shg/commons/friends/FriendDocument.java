@@ -10,9 +10,9 @@ import pl.shg.commons.database.Connection;
 import pl.shg.commons.documents.Document;
 import pl.shg.commons.documents.DocumentInfo;
 import pl.shg.commons.documents.IgnoreDocument;
-import pl.shg.commons.documents.NotificationDocument;
-import pl.shg.commons.documents.RankDocument;
-import pl.shg.commons.documents.UserDocument;
+import pl.shg.commons.users.NotificationDocument;
+import pl.shg.commons.users.RankDocument;
+import pl.shg.commons.users.UserDocument;
 
 /**
  * Friendships management

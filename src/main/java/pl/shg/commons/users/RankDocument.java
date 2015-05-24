@@ -4,23 +4,24 @@
  * Proprietary and confidential
  * Written by Aleksander Jagiełło <themolkapl@gmail.com>, 2014
  */
-package pl.shg.commons.documents;
+package pl.shg.commons.users;
 
 import pl.shg.commons.database.Connection;
-import pl.shg.commons.settings.SettingDocument;
+import pl.shg.commons.documents.Document;
+import pl.shg.commons.documents.DocumentInfo;
 
 /**
- * Notifications on the website or game's side management
+ * Server ranks management
  * @author Aleksander
  */
 @DocumentInfo(
-        name = "notification",
-        strong = false,
+        name = "rank",
+        strong = true,
         connection = Connection.USERS,
-        documents = {SettingDocument.class, UserDocument.class}
+        documents = {NotificationDocument.class, UserDocument.class}
 )
-public class NotificationDocument extends Document {
-    public NotificationDocument() {
+public class RankDocument extends Document {
+    public RankDocument() {
         super();
     }
 }

@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import pl.shg.commons.friends.FriendDocument;
 import pl.shg.commons.settings.SettingDocument;
+import pl.shg.commons.users.NotificationDocument;
+import pl.shg.commons.users.RankDocument;
+import pl.shg.commons.users.UserDocument;
+import pl.shg.commons.users.UsernameDocument;
+import pl.shg.commons.users.XPDocument;
 
 /**
  *

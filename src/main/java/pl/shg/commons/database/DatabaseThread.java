@@ -55,6 +55,7 @@ public class DatabaseThread implements Runnable {
             }
             
             task.callFuture(result);
+            statement.close();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             Logger.getLogger(DatabaseThread.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,7 +65,7 @@ public class DatabaseThread implements Runnable {
     
     public synchronized void addTask(Connection connection, String query, Object[] values, FutureTask future) {
         this.waitingTasks.add(new Task(connection, query, values, future));
-        this.run();
+        this.thread.interrupt();
     }
     
     public static DatabaseThread getThread() {

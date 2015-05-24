@@ -7,6 +7,8 @@
 package pl.shg.commons.documents;
 
 import pl.shg.commons.database.Connection;
+import pl.shg.commons.users.NotificationDocument;
+import pl.shg.commons.users.UserDocument;
 
 /**
  * Reports management

@@ -4,22 +4,24 @@
  * Proprietary and confidential
  * Written by Aleksander Jagiełło <themolkapl@gmail.com>, 2014
  */
-package pl.shg.commons.documents;
+package pl.shg.commons.users;
 
 import pl.shg.commons.database.Connection;
+import pl.shg.commons.documents.Document;
+import pl.shg.commons.documents.DocumentInfo;
 
 /**
- * Username's history management
+ * Unique users management
  * @author Aleksander
  */
 @DocumentInfo(
-        name = "username",
+        name = "user",
         strong = true,
         connection = Connection.USERS,
-        documents = {UserDocument.class}
+        documents = {UsernameDocument.class}
 )
-public class UsernameDocument extends Document {
-    public UsernameDocument() {
+public class UserDocument extends Document {
+    public UserDocument() {
         super();
     }
 }

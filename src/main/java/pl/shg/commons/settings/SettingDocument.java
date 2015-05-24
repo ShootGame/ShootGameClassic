@@ -9,7 +9,8 @@ package pl.shg.commons.settings;
 import pl.shg.commons.database.Connection;
 import pl.shg.commons.documents.Document;
 import pl.shg.commons.documents.DocumentInfo;
-import pl.shg.commons.documents.UserDocument;
+import pl.shg.commons.documents.Documents;
+import pl.shg.commons.users.UserDocument;
 
 /**
  * Settings management
@@ -24,5 +25,9 @@ import pl.shg.commons.documents.UserDocument;
 public class SettingDocument extends Document {
     public SettingDocument() {
         super();
+    }
+    
+    public static SettingDocument getDocument() {
+        return (SettingDocument) Documents.of(SettingDocument.class);
     }
 }

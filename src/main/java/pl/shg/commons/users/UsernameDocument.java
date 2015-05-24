@@ -4,22 +4,24 @@
  * Proprietary and confidential
  * Written by Aleksander Jagiełło <themolkapl@gmail.com>, 2014
  */
-package pl.shg.commons.documents;
+package pl.shg.commons.users;
 
 import pl.shg.commons.database.Connection;
+import pl.shg.commons.documents.Document;
+import pl.shg.commons.documents.DocumentInfo;
 
 /**
- * Server ranks management
+ * Username's history management
  * @author Aleksander
  */
 @DocumentInfo(
-        name = "rank",
+        name = "username",
         strong = true,
         connection = Connection.USERS,
-        documents = {NotificationDocument.class, UserDocument.class}
+        documents = {UserDocument.class}
 )
-public class RankDocument extends Document {
-    public RankDocument() {
+public class UsernameDocument extends Document {
+    public UsernameDocument() {
         super();
     }
 }

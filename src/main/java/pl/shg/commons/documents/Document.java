@@ -42,9 +42,10 @@ public class Document {
     
     private DocumentInfo getAnnotation() {
         Annotation annotation = this.getClass().getDeclaredAnnotation(DocumentInfo.class);
-        if (annotation == null) {
+        if (annotation != null) {
+            return (DocumentInfo) annotation;
+        } else {
             throw new UnsupportedOperationException(this.getClass().getSimpleName() + " must be @DocumentInfo annotated.");
         }
-        return (DocumentInfo) annotation;
     }
 }

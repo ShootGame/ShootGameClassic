@@ -8,7 +8,6 @@ package pl.shg.commons.settings;
 
 import java.util.ArrayList;
 import java.util.List;
-import pl.shg.commons.documents.Documents;
 
 /**
  *
@@ -27,10 +26,6 @@ public class Settings {
             }
         }
         return null;
-    }
-    
-    public static SettingDocument getDatabase() {
-        return (SettingDocument) Documents.of(SettingDocument.class);
     }
     
     public static List<Setting> getSettings() {
