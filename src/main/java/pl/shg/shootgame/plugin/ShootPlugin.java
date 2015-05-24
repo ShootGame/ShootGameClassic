@@ -15,6 +15,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.shg.commons.command.CommandBase;
+import pl.shg.commons.database.DatabaseThread;
+import pl.shg.commons.documents.Documents;
 import pl.shg.commons.server.BungeeCordProxy;
 import pl.shg.commons.server.Servers;
 import pl.shg.shootgame.listeners.PlayerListeners;
@@ -38,6 +40,9 @@ public class ShootPlugin extends JavaPlugin {
         this.registerBukkitCommands();
         this.registerListeners();
         this.registerServers();
+        
+        DatabaseThread.getThread(); // create a static new instance of this thread
+        Documents.registerDefault();
     }
     
     private void registerBukkitCommands() {
