@@ -4,17 +4,14 @@
  * Proprietary and confidential
  * Written by Aleksander Jagiełło <themolkapl@gmail.com>, 2014
  */
-package pl.shg.commons.documents;
-
-import pl.shg.commons.database.Connection;
+package pl.shg.commons.settings;
 
 /**
  *
  * @author Aleksander
  */
-@DocumentInfo(name = "friend", strong = false, connection = Connection.USERS)
-public class FriendDocument extends Document {
-    public FriendDocument() {
-        super();
+public class SoundSetting extends Setting {
+    public SoundSetting() {
+        super("dzwieki", new BooleanDefinition(true));
     }
 }

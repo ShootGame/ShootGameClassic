@@ -9,10 +9,15 @@ package pl.shg.commons.documents;
 import pl.shg.commons.database.Connection;
 
 /**
- *
+ * Server ranks management
  * @author Aleksander
  */
-@DocumentInfo(name = "rank", strong = true, connection = Connection.USERS)
+@DocumentInfo(
+        name = "rank",
+        strong = true,
+        connection = Connection.USERS,
+        documents = {NotificationDocument.class, UserDocument.class}
+)
 public class RankDocument extends Document {
     public RankDocument() {
         super();

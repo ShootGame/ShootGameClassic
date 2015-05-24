@@ -9,10 +9,15 @@ package pl.shg.commons.documents;
 import pl.shg.commons.database.Connection;
 
 /**
- *
+ * Map ratings management
  * @author Aleksander
  */
-@DocumentInfo(name = "rate", strong = false, connection = Connection.USERS)
+@DocumentInfo(
+        name = "rate",
+        strong = false,
+        connection = Connection.USERS,
+        documents = {NotificationDocument.class, UserDocument.class}
+)
 public class RateDocument extends Document {
     public RateDocument() {
         super();

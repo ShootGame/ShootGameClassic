@@ -4,22 +4,25 @@
  * Proprietary and confidential
  * Written by Aleksander Jagiełło <themolkapl@gmail.com>, 2014
  */
-package pl.shg.commons.documents;
+package pl.shg.commons.settings;
 
 import pl.shg.commons.database.Connection;
+import pl.shg.commons.documents.Document;
+import pl.shg.commons.documents.DocumentInfo;
+import pl.shg.commons.documents.UserDocument;
 
 /**
- * Kills with deaths managements
+ * Settings management
  * @author Aleksander
  */
 @DocumentInfo(
-        name = "kill",
+        name = "setting",
         strong = false,
         connection = Connection.USERS,
         documents = {UserDocument.class}
 )
-public class KillDocument extends Document {
-    public KillDocument() {
+public class SettingDocument extends Document {
+    public SettingDocument() {
         super();
     }
 }

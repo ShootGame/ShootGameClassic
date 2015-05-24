@@ -9,10 +9,15 @@ package pl.shg.commons.documents;
 import pl.shg.commons.database.Connection;
 
 /**
- *
+ * Punishments management
  * @author Aleksander
  */
-@DocumentInfo(name = "punishment", strong = true, connection = Connection.USERS)
+@DocumentInfo(
+        name = "punishment",
+        strong = true,
+        connection = Connection.USERS,
+        documents = {NotificationDocument.class, UserDocument.class}
+)
 public class PunishmentDocument extends Document {
     public PunishmentDocument() {
         super();

@@ -9,10 +9,15 @@ package pl.shg.commons.documents;
 import pl.shg.commons.database.Connection;
 
 /**
- *
+ * Reports management
  * @author Aleksander
  */
-@DocumentInfo(name = "report", strong = false, connection = Connection.USERS)
+@DocumentInfo(
+        name = "report",
+        strong = false,
+        connection = Connection.USERS,
+        documents = {NotificationDocument.class, UserDocument.class}
+)
 public class ReportDocument extends Document {
     public ReportDocument() {
         super();

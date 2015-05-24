@@ -6,6 +6,7 @@
  */
 package pl.shg.commons.documents;
 
+import java.lang.annotation.Annotation;
 import pl.shg.commons.database.Connection;
 import pl.shg.commons.database.DatabaseThread;
 import pl.shg.commons.database.FutureTask;
@@ -40,6 +41,10 @@ public class Document {
     }
     
     private DocumentInfo getAnnotation() {
-        return this.getClass().getDeclaredAnnotation(DocumentInfo.class);
+        Annotation annotation = this.getClass().getDeclaredAnnotation(DocumentInfo.class);
+        if (annotation == null) {
+            throw new UnsupportedOperationException(this.getClass().getSimpleName() + " must be @DocumentInfo annotated.");
+        }
+        return (DocumentInfo) annotation;
     }
 }

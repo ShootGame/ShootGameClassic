@@ -7,12 +7,18 @@
 package pl.shg.commons.documents;
 
 import pl.shg.commons.database.Connection;
+import pl.shg.commons.settings.SettingDocument;
 
 /**
- *
+ * Notifications on the website or game's side management
  * @author Aleksander
  */
-@DocumentInfo(name = "notification", strong = false, connection = Connection.USERS)
+@DocumentInfo(
+        name = "notification",
+        strong = false,
+        connection = Connection.USERS,
+        documents = {SettingDocument.class, UserDocument.class}
+)
 public class NotificationDocument extends Document {
     public NotificationDocument() {
         super();

@@ -9,17 +9,17 @@ package pl.shg.commons.documents;
 import pl.shg.commons.database.Connection;
 
 /**
- * Kills with deaths managements
+ * Username's history management
  * @author Aleksander
  */
 @DocumentInfo(
-        name = "kill",
-        strong = false,
+        name = "username",
+        strong = true,
         connection = Connection.USERS,
         documents = {UserDocument.class}
 )
-public class KillDocument extends Document {
-    public KillDocument() {
+public class UsernameDocument extends Document {
+    public UsernameDocument() {
         super();
     }
 }

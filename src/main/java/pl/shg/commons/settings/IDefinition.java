@@ -4,17 +4,16 @@
  * Proprietary and confidential
  * Written by Aleksander Jagiełło <themolkapl@gmail.com>, 2014
  */
-package pl.shg.commons.documents;
-
-import pl.shg.commons.database.Connection;
+package pl.shg.commons.settings;
 
 /**
  *
  * @author Aleksander
  */
-@DocumentInfo(name = "setting", strong = false, connection = Connection.USERS)
-public class SettingDocument extends Document {
-    public SettingDocument() {
-        super();
-    }
+public interface IDefinition {
+    Object get();
+    
+    boolean set(Object obj);
+    
+    int value();
 }

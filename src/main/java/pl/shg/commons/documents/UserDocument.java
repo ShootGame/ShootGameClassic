@@ -9,10 +9,15 @@ package pl.shg.commons.documents;
 import pl.shg.commons.database.Connection;
 
 /**
- *
+ * Unique users management
  * @author Aleksander
  */
-@DocumentInfo(name = "user", strong = true, connection = Connection.USERS)
+@DocumentInfo(
+        name = "user",
+        strong = true,
+        connection = Connection.USERS,
+        documents = {UsernameDocument.class}
+)
 public class UserDocument extends Document {
     public UserDocument() {
         super();

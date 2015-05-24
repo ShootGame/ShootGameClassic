@@ -8,6 +8,8 @@ package pl.shg.commons.documents;
 
 import java.util.ArrayList;
 import java.util.List;
+import pl.shg.commons.friends.FriendDocument;
+import pl.shg.commons.settings.SettingDocument;
 
 /**
  *
@@ -26,16 +28,17 @@ public class Documents {
         new ReportDocument(),
         new SettingDocument(),
         new UserDocument(),
+        new UsernameDocument(),
         new XPDocument(),
     };
     private static final List<Document> documents = new ArrayList<>();
     
-    public static List<Document> getDocument() {
+    public static List<Document> getDocuments() {
         return documents;
     }
     
     public static Document of(Class<? extends Document> document) {
-        for (Document doc : getDocument()) {
+        for (Document doc : getDocuments()) {
             if (doc.getClass().equals(document)) {
                 return doc;
             }

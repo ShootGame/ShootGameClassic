@@ -9,10 +9,15 @@ package pl.shg.commons.documents;
 import pl.shg.commons.database.Connection;
 
 /**
- *
+ * Arcade's matches management
  * @author Aleksander
  */
-@DocumentInfo(name = "match", strong = false, connection = Connection.USERS)
+@DocumentInfo(
+        name = "match",
+        strong = false,
+        connection = Connection.USERS,
+        documents = {KillDocument.class, NotificationDocument.class}
+)
 public class MatchDocument extends Document {
     public MatchDocument() {
         super();
