@@ -18,7 +18,8 @@ import pl.shg.commons.documents.DocumentInfo;
         name = "rank",
         strong = true,
         connection = Connection.USERS,
-        documents = {NotificationDocument.class, UserDocument.class}
+        documents = {NotificationDocument.class, UserDocument.class},
+        helper = RankHelper.class
 )
 public class RankDocument extends Document {
     public RankDocument() {

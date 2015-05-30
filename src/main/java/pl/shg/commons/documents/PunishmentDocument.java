@@ -7,6 +7,7 @@
 package pl.shg.commons.documents;
 
 import pl.shg.commons.database.Connection;
+import pl.shg.commons.helpers.PunishmentHelper;
 import pl.shg.commons.users.NotificationDocument;
 import pl.shg.commons.users.UserDocument;
 
@@ -18,7 +19,8 @@ import pl.shg.commons.users.UserDocument;
         name = "punishment",
         strong = true,
         connection = Connection.USERS,
-        documents = {NotificationDocument.class, UserDocument.class}
+        documents = {NotificationDocument.class, UserDocument.class},
+        helper = PunishmentHelper.class
 )
 public class PunishmentDocument extends Document {
     public PunishmentDocument() {

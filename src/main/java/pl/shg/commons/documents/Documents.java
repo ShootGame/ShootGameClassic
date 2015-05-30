@@ -6,8 +6,9 @@
  */
 package pl.shg.commons.documents;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import pl.shg.commons.friends.FriendDocument;
 import pl.shg.commons.settings.SettingDocument;
 import pl.shg.commons.users.NotificationDocument;
@@ -36,23 +37,18 @@ public class Documents {
         new UsernameDocument(),
         new XPDocument(),
     };
-    private static final List<Document> documents = new ArrayList<>();
+    private static final Map<Class<? extends Document>, Document> documents = new HashMap<>();
     
-    public static List<Document> getDocuments() {
+    public static Map<Class<? extends Document>, Document> getDocuments() {
         return documents;
     }
     
     public static Document of(Class<? extends Document> document) {
-        for (Document doc : getDocuments()) {
-            if (doc.getClass().equals(document)) {
-                return doc;
-            }
-        }
-        return null;
+        return documents.getOrDefault(document, null);
     }
     
     public static void register(Document document) {
-        documents.add(document);
+        documents.put(document.getClass(), document);
     }
     
     public static void registerDefault() {

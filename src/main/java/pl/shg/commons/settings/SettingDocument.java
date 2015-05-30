@@ -20,7 +20,8 @@ import pl.shg.commons.users.UserDocument;
         name = "setting",
         strong = false,
         connection = Connection.USERS,
-        documents = {UserDocument.class}
+        documents = {UserDocument.class},
+        helper = SettingHelper.class
 )
 public class SettingDocument extends Document {
     public SettingDocument() {

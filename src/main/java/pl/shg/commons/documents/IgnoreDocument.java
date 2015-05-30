@@ -8,6 +8,7 @@ package pl.shg.commons.documents;
 
 import pl.shg.commons.database.Connection;
 import pl.shg.commons.friends.FriendDocument;
+import pl.shg.commons.helpers.IgnoreHelper;
 import pl.shg.commons.users.NotificationDocument;
 import pl.shg.commons.users.RankDocument;
 import pl.shg.commons.users.UserDocument;
@@ -20,7 +21,8 @@ import pl.shg.commons.users.UserDocument;
         name = "ignore",
         strong = false,
         connection = Connection.USERS,
-        documents = {FriendDocument.class, NotificationDocument.class, RankDocument.class, UserDocument.class}
+        documents = {FriendDocument.class, NotificationDocument.class, RankDocument.class, UserDocument.class},
+        helper = IgnoreHelper.class
 )
 public class IgnoreDocument extends Document {
     public IgnoreDocument() {

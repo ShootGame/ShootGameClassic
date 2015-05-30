@@ -9,6 +9,7 @@ package pl.shg.commons.documents;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import pl.shg.commons.database.Connection;
+import pl.shg.commons.helpers.Helper;
 
 /**
  *
@@ -23,4 +24,6 @@ public @interface DocumentInfo {
     Connection connection();
     
     Class<? extends Document>[] documents() default {};
+    
+    Class<? extends Helper> helper();
 }

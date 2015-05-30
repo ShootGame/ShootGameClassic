@@ -18,7 +18,8 @@ import pl.shg.commons.documents.DocumentInfo;
         name = "user",
         strong = true,
         connection = Connection.USERS,
-        documents = {UsernameDocument.class}
+        documents = {UsernameDocument.class},
+        helper = UserHelper.class
 )
 public class UserDocument extends Document {
     public UserDocument() {

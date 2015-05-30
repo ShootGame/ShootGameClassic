@@ -22,7 +22,8 @@ import pl.shg.commons.users.UserDocument;
         name = "friend",
         strong = false,
         connection = Connection.USERS,
-        documents = {IgnoreDocument.class, NotificationDocument.class, RankDocument.class, UserDocument.class}
+        documents = {IgnoreDocument.class, NotificationDocument.class, RankDocument.class, UserDocument.class},
+        helper = FriendHelper.class
 )
 public class FriendDocument extends Document {
     public FriendDocument() {

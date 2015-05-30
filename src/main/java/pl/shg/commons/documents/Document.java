@@ -7,21 +7,36 @@
 package pl.shg.commons.documents;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pl.shg.commons.database.Connection;
 import pl.shg.commons.database.DatabaseThread;
 import pl.shg.commons.database.FutureTask;
+import pl.shg.commons.helpers.Helper;
 
 /**
  *
  * @author Aleksander
  */
 public class Document {
+    private Helper helper;
+    
     public Document() {
-        // TODO ?
+        try {
+            Class<? extends Helper> helperClass = this.getAnnotation().helper();
+            this.helper = helperClass.getConstructor(this.getClass()).newInstance(this);
+        } catch (Throwable ex) {
+            this.helper = new Helper(this);
+        }
     }
     
     public Connection getConnection() {
         return this.getAnnotation().connection();
+    }
+    
+    public Helper getHelper() {
+        return this.helper;
     }
     
     public String getName() {

@@ -19,7 +19,8 @@ import pl.shg.commons.settings.SettingDocument;
         name = "notification",
         strong = false,
         connection = Connection.USERS,
-        documents = {SettingDocument.class, UserDocument.class}
+        documents = {SettingDocument.class, UserDocument.class},
+        helper = NotificationHelper.class
 )
 public class NotificationDocument extends Document {
     public NotificationDocument() {

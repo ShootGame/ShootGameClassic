@@ -7,6 +7,7 @@
 package pl.shg.commons.documents;
 
 import pl.shg.commons.database.Connection;
+import pl.shg.commons.helpers.KillHelper;
 import pl.shg.commons.users.UserDocument;
 
 /**
@@ -17,7 +18,8 @@ import pl.shg.commons.users.UserDocument;
         name = "kill",
         strong = false,
         connection = Connection.USERS,
-        documents = {UserDocument.class}
+        documents = {UserDocument.class},
+        helper = KillHelper.class
 )
 public class KillDocument extends Document {
     public KillDocument() {
