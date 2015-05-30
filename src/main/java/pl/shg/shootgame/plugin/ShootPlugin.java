@@ -41,8 +41,23 @@ public class ShootPlugin extends JavaPlugin {
         this.registerListeners();
         this.registerServers();
         
-        DatabaseThread.getThread(); // create a static new instance of this thread
+        // create a new instance of the database connection thread
+        DatabaseThread databaseThread = new DatabaseThread();
+        DatabaseThread.setThread(databaseThread);
+        
         Documents.registerDefault();
+        
+        // begin allow to execute SQL commands
+        databaseThread.setRunning(true);
+    }
+    
+    @Override
+    public void onDisable() {
+        DatabaseThread databaseThread = DatabaseThread.getThread();
+        if (databaseThread != null) {
+            // don't execute any SQL commands anymore
+            databaseThread.setRunning(false);
+        }
     }
     
     private void registerBukkitCommands() {
