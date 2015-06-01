@@ -240,9 +240,9 @@ public abstract class CommandBase {
         register(plugin, new ServerCommand());
         register(plugin, new ServersCommand());
         register(plugin, new ShgCommand());
-        register(plugin, new StaffCommand());
-        register(plugin, new StatsCommand());
-        register(plugin, new XpCommand());
+//        register(plugin, new StaffCommand());
+//        register(plugin, new StatsCommand());
+//        register(plugin, new XpCommand());
     }
     
     private static void registerBukkit(Plugin plugin, CommandBase command) {

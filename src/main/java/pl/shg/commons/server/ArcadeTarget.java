@@ -6,6 +6,7 @@
  */
 package pl.shg.commons.server;
 
+import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.libs.com.google.gson.Gson;
 
 /**
@@ -41,6 +42,16 @@ public class ArcadeTarget extends TargetServer {
     
     public int getArcadeSlots() {
         return this.arcadeSlots;
+    }
+    
+    public ChatColor getColor() {
+        switch (this.getStatus()) {
+            case 0: return ChatColor.GRAY; // restarting
+            case 1: return ChatColor.GREEN; // starting
+            case 2: return ChatColor.GOLD; // running
+            case 3: return ChatColor.DARK_RED; // cycling
+            default: return ChatColor.GRAY;
+        }
     }
     
     public String getMap() {

@@ -15,11 +15,11 @@ public class ArcadeData {
     
     public static Object[] fromData(String data) {
         String[] values = data.split("\\" + String.valueOf(SEPARATOR));
-        Object[] objects = new Object[4];
+        Object[] objects = new Object[values.length];
         
         for (byte i = 0; i < values.length; i++) {
             try {
-                objects[i] = readData(i, data);
+                objects[i] = readData(i, values[i]);
             } catch (NumberFormatException ex) {
                 
             }

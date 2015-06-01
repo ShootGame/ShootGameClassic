@@ -28,25 +28,28 @@ public class ServerCommand extends CommandBase {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("Ta komende moze wykonac tylko gracz.");
-            return;
-        }
-        
-        if (args.length == 0) {
+            sender.sendMessage("Ten serwer to " + Servers.getOnline().getName() + ".");
+        } else if (args.length == 0) {
             sender.sendMessage(ChatColor.YELLOW + "Obecnie znajdujesz sie na " + ChatColor.GOLD +
                     Servers.getOnline().getName() + ChatColor.YELLOW + ".");
-            sender.sendMessage(ChatColor.YELLOW + "Aby przejsc na inny serwer uzyj /serwer <nazwa>");
+            sender.sendMessage(ChatColor.YELLOW + "Aby wyswietlic liste serwerów uzyj /serwery");
         } else {
-            String server = args[0].toLowerCase();
+            String server = this.getStringFromArgs(0, args);
             TargetServer target = Servers.getServer(server);
             if (target == null) {
                 target = Servers.findServer(server);
             }
             
-            if (target != null) {
+            if (target == null) {
+                sender.sendMessage(ChatColor.RED + "Serwer \"" + server + "\" nie zostal odnaleziony.");
+                return;
+            }
+            
+            if (target.isPublic() || sender.hasPermission("shootgame.servers-bypass")) {
                 Servers.getProxy().connect((Player) sender, target);
             } else {
-                sender.sendMessage(ChatColor.RED + "Serwer zawierajacy \"" + args[0] + "\" nie zostal odnaleziony.");
+                sender.sendMessage(ChatColor.RED + "Serwer " + target.getName() +
+                        " jest prywatny oraz nie posiadasz do niego dostepu.");
             }
         }
     }

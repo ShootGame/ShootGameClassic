@@ -28,8 +28,16 @@ public class Servers {
     }
     
     public static TargetServer findServer(String query) {
-        for (TargetServer server : servers) {
+        // find by name
+        for (TargetServer server : getServers()) {
             if (server.getName().toLowerCase().contains(query.toLowerCase())) {
+                return server;
+            }
+        }
+        
+        // not found - find by ID
+        for (TargetServer server : getServers()) {
+            if (server.getID().toLowerCase().contains(query.toLowerCase())) {
                 return server;
             }
         }
@@ -54,7 +62,7 @@ public class Servers {
     
     public static TargetServer getServer(String id) {
         for (TargetServer server : servers) {
-            if (server.getName().equalsIgnoreCase(id)) {
+            if (server.getName().equalsIgnoreCase(id) || server.getID().equalsIgnoreCase(id)) {
                 return server;
             }
         }

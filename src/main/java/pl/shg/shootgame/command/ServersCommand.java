@@ -31,7 +31,8 @@ public class ServersCommand extends CommandBase {
     public void execute(CommandSender sender, String[] args) {
         sender.sendMessage(CommandBase.getTitle("Lista serwerów ShootGame", null));
         if (sender instanceof Player) {
-            sender.sendMessage(ChatColor.GOLD + "Znajdujesz sie na " + ChatColor.GREEN + ChatColor.BOLD + Servers.getOnline().getName());
+            sender.sendMessage(ChatColor.GOLD + "Znajdujesz sie na serwerze " +
+                    ChatColor.GREEN + ChatColor.BOLD + Servers.getOnline().getName());
         }
         
         for (TargetServer target : Servers.getServers()) {
@@ -39,13 +40,13 @@ public class ServersCommand extends CommandBase {
                 if (target instanceof ArcadeTarget) {
                     sender.sendMessage(this.printArcade((ArcadeTarget) target));
                 } else if (target instanceof LobbyTarget) {
-                    
+                    sender.sendMessage(this.printLobby((LobbyTarget) target));
                 } else if (target instanceof MinecraftTarget) {
                     sender.sendMessage(this.printMinecraft((MinecraftTarget) target));
                 }
             }
         }
-        sender.sendMessage(ChatColor.YELLOW + "Aby przejsc na inny serwer uzyj /serwer <nazwa>");
+        sender.sendMessage(ChatColor.YELLOW + "Aby przejsc na dany serwer uzyj /serwer <nazwa>");
     }
     
     @Override
@@ -53,24 +54,29 @@ public class ServersCommand extends CommandBase {
         return 0;
     }
     
-    private String printArcade(ArcadeTarget target) {
-        String prefix = "";
-        if (!target.isPublic()) {
-            prefix = ChatColor.GOLD + ChatColor.ITALIC.toString() + "[Ukryty] " + ChatColor.RESET;
+    private String getPrefix(TargetServer target) {
+        if (target.isPublic()) {
+            return "";
+        } else {
+            return ChatColor.GOLD + ChatColor.ITALIC.toString() + "[Ukryty] " + ChatColor.RESET;
         }
-        return ChatColor.GRAY + "- " + prefix + ChatColor.DARK_AQUA + ChatColor.BOLD + target.getName() +
-                ChatColor.RESET + " " + ChatColor.DARK_PURPLE + target.getArcadePlayers() +
-                ChatColor.GRAY + "/" + target.getArcadeSlots() + " - " + ChatColor.DARK_AQUA +
+    }
+    
+    private String printArcade(ArcadeTarget target) {
+        return ChatColor.GRAY + "- " + this.getPrefix(target) + ChatColor.DARK_AQUA + ChatColor.BOLD +
+                target.getName() + ChatColor.RESET + " " + ChatColor.DARK_PURPLE + target.getArcadePlayers() +
+                ChatColor.GRAY + "/" + target.getArcadeSlots() + " - " + target.getColor().toString() +
                 ChatColor.ITALIC + target.getMap();
     }
     
+    private String printLobby(LobbyTarget target) {
+        return ChatColor.GRAY + "- " + this.getPrefix(target) + ChatColor.DARK_AQUA + ChatColor.BOLD +
+                target.getName() + ChatColor.RESET + " " + ChatColor.DARK_PURPLE + target.getPlayers();
+    }
+    
     private String printMinecraft(MinecraftTarget target) {
-        String prefix = "";
-        if (!target.isPublic()) {
-            prefix = ChatColor.GOLD + ChatColor.ITALIC.toString() + "[Ukryty] " + ChatColor.RESET;
-        }
-        return ChatColor.GRAY + "- " + prefix + ChatColor.DARK_AQUA + ChatColor.BOLD + target.getName() +
-                ChatColor.RESET + " " + ChatColor.DARK_PURPLE + target.getPlayers()+
+        return ChatColor.GRAY + "- " + this.getPrefix(target) + ChatColor.DARK_AQUA + ChatColor.BOLD +
+                target.getName() + ChatColor.RESET + " " + ChatColor.DARK_PURPLE + target.getPlayers()+
                 ChatColor.GRAY + "/" + target.getSlots();
     }
 }
