@@ -21,7 +21,6 @@ public class ServerCommand extends CommandBase {
     public ServerCommand() {
         this.setAliases("server", "serwer");
         this.setDescription("Przejdz na dany serwer lub pokaz informacje o obecnym");
-        this.setPermission("shootgame.command.server");
         this.setUsage("[target]");
     }
     
@@ -45,11 +44,12 @@ public class ServerCommand extends CommandBase {
                 return;
             }
             
-            if (target.isPublic() || sender.hasPermission("shootgame.servers-bypass")) {
-                Servers.getProxy().connect((Player) sender, target);
+            if (!target.isPublic() && !sender.hasPermission("shootgame.servers-bypass")) {
+                sender.sendMessage(ChatColor.RED + "Nie posiadasz dostepu do serwera " + target.getName() + ".");
+            } else if (!target.isOnline()) {
+                sender.sendMessage(ChatColor.RED + "Serwer " + target.getName() + " jest offline.");
             } else {
-                sender.sendMessage(ChatColor.RED + "Serwer " + target.getName() +
-                        " jest prywatny oraz nie posiadasz do niego dostepu.");
+                Servers.getProxy().connect((Player) sender, target);
             }
         }
     }

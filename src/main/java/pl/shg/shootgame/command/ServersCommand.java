@@ -24,7 +24,6 @@ public class ServersCommand extends CommandBase {
     public ServersCommand() {
         this.setAliases("servers", "serwery");
         this.setDescription("Pokaz liste dostepnych serwerów");
-        this.setPermission("shootgame.command.servers.");
     }
     
     @Override
