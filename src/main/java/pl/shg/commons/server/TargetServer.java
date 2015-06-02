@@ -136,6 +136,8 @@ public abstract class TargetServer extends Server implements ITarget {
             input.close();
             socket.close();
         } catch (IOException ex) {
+            this.setPlayers(0);
+            this.setSlots(0);
         } finally {
             try {
                 if (data != null) data.close();
