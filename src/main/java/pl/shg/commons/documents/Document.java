@@ -7,9 +7,6 @@
 package pl.shg.commons.documents;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pl.shg.commons.database.Connection;
 import pl.shg.commons.database.DatabaseThread;
 import pl.shg.commons.database.FutureTask;
