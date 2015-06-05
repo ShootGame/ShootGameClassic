@@ -19,6 +19,8 @@ import pl.shg.commons.database.DatabaseThread;
 import pl.shg.commons.documents.Documents;
 import pl.shg.commons.server.BungeeCordProxy;
 import pl.shg.commons.server.Servers;
+import pl.shg.shootgame.command.ServerCommand;
+import pl.shg.shootgame.command.ServersCommand;
 import pl.shg.shootgame.listeners.PlayerListeners;
 
 /**
@@ -34,7 +36,7 @@ public class ShootPlugin extends JavaPlugin {
         this.saveDefaultConfig();
         configuration = this.getConfig();
         instance = this;
-        Servers.setProxy(new BungeeCordProxy());
+        Servers.setProxy(new BungeeCordProxy(this));
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         
         this.registerBukkitCommands();
@@ -61,7 +63,9 @@ public class ShootPlugin extends JavaPlugin {
     }
     
     private void registerBukkitCommands() {
-        CommandBase.registerDefaults(this);
+        CommandBase.register(this, new ServerCommand());
+        CommandBase.register(this, new ServersCommand());
+        
         CommandBase.registerHelpTopic(this);
     }
     
