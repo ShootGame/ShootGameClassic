@@ -6,7 +6,7 @@
  */
 package pl.shg.commons.server;
 
-import org.bukkit.craftbukkit.libs.com.google.gson.Gson;
+import com.google.gson.Gson;
 
 /**
  *

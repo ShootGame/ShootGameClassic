@@ -25,7 +25,7 @@ public class BungeeCordProxy implements IProxiedServer {
         ByteArrayOutputStream array = new ByteArrayOutputStream();
         DataOutputStream output = new DataOutputStream(array);
         
-        player.sendMessage(ChatColor.YELLOW + "Laczenie z serwerem " + ChatColor.DARK_PURPLE + server.getName() + ChatColor.YELLOW + "...");
+        player.sendMessage(ChatColor.YELLOW + "Laczenie z serwerem " + ChatColor.AQUA + server.getName() + ChatColor.YELLOW + "...");
         try {
             output.writeUTF("Connect");
             output.writeUTF(server.getID());

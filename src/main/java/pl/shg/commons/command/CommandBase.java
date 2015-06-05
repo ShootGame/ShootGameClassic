@@ -19,6 +19,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.help.GenericCommandHelpTopic;
 import org.bukkit.help.HelpTopic;
 import org.bukkit.help.HelpTopicComparator;
@@ -274,9 +275,17 @@ public abstract class CommandBase {
                 continue;
             }
             
-            Command bukkit = Bukkit.getCommandMap().getCommand(command.getName());
-            if (bukkit != null) {
-                help.add(new GenericCommandHelpTopic(bukkit));
+            try {
+                Field mapField = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+                mapField.setAccessible(true);
+                SimpleCommandMap map = (SimpleCommandMap) mapField.get(Bukkit.getServer());
+                
+                Command bukkit = map.getCommand(command.getName());
+                if (bukkit != null) {
+                    help.add(new GenericCommandHelpTopic(bukkit));
+                }
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+                Logger.getLogger(CommandBase.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
