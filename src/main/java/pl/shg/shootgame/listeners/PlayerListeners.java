@@ -6,12 +6,16 @@
  */
 package pl.shg.shootgame.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import pl.shg.shootgame.Language;
 import pl.shg.shootgame.api.Log;
 
 /**
@@ -24,18 +28,28 @@ public class PlayerListeners implements Listener {
         // TODO Update table "dev_players", row "name" to the current players name
     }
     
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent e) {
         e.setJoinMessage(null);
         
-        Log.admins(e.getPlayer().getName() + " dolaczyl/a na serwer");
+        this.staff(Language.LISTENERS_JOIN, e.getPlayer().getDisplayName() + ChatColor.YELLOW);
     }
     
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(PlayerQuitEvent e) {
         e.setQuitMessage(null);
         
-        Log.admins(e.getPlayer().getName() + " opuscil/a serwer");
+        this.staff(Language.LISTENERS_QUIT, e.getPlayer().getDisplayName() + ChatColor.YELLOW);
+    }
+    
+    private void staff(Language message, Object... params) {
+        String prefix = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "INFO" + ChatColor.DARK_AQUA + "] " + ChatColor.YELLOW;
+        
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            if (online.hasPermission("shootgame.staff")) {
+                online.sendMessage(prefix + message.get(online, params));
+            }
+        }
     }
     
     private String translateDeathMessage(String message, String player, String killer) {

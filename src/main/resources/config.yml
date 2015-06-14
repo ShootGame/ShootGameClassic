@@ -1,2 +1,11 @@
-server: Development
-server-list: 'http://git.voxelland.pl/shootgame/servers/raw/master/servers.yml'
+server-id: 'Development'
+translations: './lang'
+
+mongo:
+  uri: 'mongodb://127.0.0.1:27017'
+  database: 'shg'
+
+servers:
+  uri: 'mongodb://127.0.0.1:27017'
+  database: 'servers'
+  collection: 'public-servers'

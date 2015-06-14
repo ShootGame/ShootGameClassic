@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import pl.shg.commons.command.CommandBase;
 import pl.shg.commons.server.Servers;
 import pl.shg.commons.server.TargetServer;
+import pl.shg.shootgame.Language;
 
 /**
  *
@@ -27,11 +28,11 @@ public class ServerCommand extends CommandBase {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("Ten serwer to " + Servers.getOnline().getName() + ".");
+            sender.sendMessage(Language.COMMAND_SERVER_CURRENT_CONSOLE.get(sender, Servers.getOnline().getName()));
         } else if (args.length == 0) {
-            sender.sendMessage(ChatColor.YELLOW + "Obecnie znajdujesz sie na " + ChatColor.GOLD +
-                    Servers.getOnline().getName() + ChatColor.YELLOW + ".");
-            sender.sendMessage(ChatColor.YELLOW + "Aby wyswietlic liste serwerów uzyj /serwery");
+            sender.sendMessage(ChatColor.YELLOW + Language.COMMAND_SERVER_CURRENT.get(sender,
+                    ChatColor.GOLD + Servers.getOnline().getName() + ChatColor.YELLOW + "."));
+            sender.sendMessage(ChatColor.YELLOW + Language.COMMAND_SERVER_LIST.get(sender));
         } else {
             String server = this.getStringFromArgs(0, args);
             TargetServer target = Servers.getServer(server);
@@ -40,14 +41,14 @@ public class ServerCommand extends CommandBase {
             }
             
             if (target == null) {
-                sender.sendMessage(ChatColor.RED + "Serwer \"" + server + "\" nie zostal odnaleziony.");
+                sender.sendMessage(ChatColor.RED + Language.COMMAND_SERVER_NOT_FOUND.get(sender, server));
                 return;
             }
             
             if (!target.isPublic() && !sender.hasPermission("shootgame.servers-bypass")) {
-                sender.sendMessage(ChatColor.RED + "Nie posiadasz dostepu do serwera " + target.getName() + ".");
+                sender.sendMessage(ChatColor.RED + Language.COMMAND_SERVER_PERMISSION.get(sender, target.getName()));
             } else if (!target.isOnline()) {
-                sender.sendMessage(ChatColor.RED + "Serwer " + target.getName() + " jest offline.");
+                sender.sendMessage(ChatColor.RED + Language.COMMAND_SERVER_OFFLINE.get(sender, target.getName()));
             } else {
                 Servers.getProxy().connect((Player) sender, target);
             }
