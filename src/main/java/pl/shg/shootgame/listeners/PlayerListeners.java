@@ -16,7 +16,6 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import pl.shg.shootgame.Language;
-import pl.shg.shootgame.api.Log;
 
 /**
  *

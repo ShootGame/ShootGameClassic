@@ -27,6 +27,8 @@ import pl.shg.commons.mongo.Mongo;
 import pl.shg.commons.mongo.ServersBase;
 import pl.shg.commons.server.BungeeCordProxy;
 import pl.shg.commons.server.Servers;
+import pl.shg.shootgame.arcade.MapArchive;
+import pl.shg.shootgame.arcade.PrimitiveAntiLogout;
 import pl.shg.shootgame.command.ServerCommand;
 import pl.shg.shootgame.command.ServersCommand;
 import pl.shg.shootgame.listeners.PlayerListeners;
@@ -52,6 +54,9 @@ public class ShootPlugin extends JavaPlugin {
         this.registerBukkitCommands();
         this.registerListeners();
         this.registerServers();
+        
+        new MapArchive();
+        new PrimitiveAntiLogout();
         
         String uri = this.getConfig().getString("mongo.uri", Mongo.URI);
         String database = this.getConfig().getString("mongo.database", Mongo.DATABASE);
