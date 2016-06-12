@@ -55,14 +55,14 @@ public class ShootPlugin extends JavaPlugin {
         this.registerListeners();
         this.registerServers();
         
-        new MapArchive();
+//        new MapArchive();
         new PrimitiveAntiLogout();
         
         String uri = this.getConfig().getString("mongo.uri", Mongo.URI);
         String database = this.getConfig().getString("mongo.database", Mongo.DATABASE);
         
         this.getLogger().log(Level.INFO, "Laczenie z baza {0} poprzez {1}...", new Object[]{database, uri});
-        Database.initializeMongo(uri, database);
+//        Database.initializeMongo(uri, database);
     }
     
     private void registerBukkitCommands() {
@@ -77,6 +77,8 @@ public class ShootPlugin extends JavaPlugin {
     }
     
     private void registerServers() {
+        /* zbedne...
+        
         String uri = this.getConfig().getString("servers.uri", ServersBase.URI);
         String database = this.getConfig().getString("servers.database", ServersBase.DATABASE);
         String collection = this.getConfig().getString("servers.collection", ServersBase.COLLECTION);
@@ -96,10 +98,11 @@ public class ShootPlugin extends JavaPlugin {
                 System.out.println("Names: " + result);
             }
         });
+        */
         
         
         try {
-            String url = "http://shootgame.net/internal/servers.yml";
+            String url = this.getConfig().getString("server-list");
             FileConfiguration target = YamlConfiguration.loadConfiguration(new URL(url).openStream());
             Servers.setConfiguration(target);
             

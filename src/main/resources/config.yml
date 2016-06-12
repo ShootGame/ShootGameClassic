@@ -1,5 +1,6 @@
 server-id: 'Development'
 translations: './lang'
+server-list: 'https://raw.githubusercontent.com/ShootGame/Servers/master/servers.yml'
 
 mongo:
   uri: 'mongodb://127.0.0.1:27017'
